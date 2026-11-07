@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+    >
+    <link rel="stylesheet" href="styles.css">
+    <script src="login.js" defer></script>
+</head>
+<body>
+    <header>
+        <div class="titleContainer">
+            <h1 class="title aquaText">
+                PLAYZONE
+            </h1>
+        </div>
+    </header>
+    <main class="content">
+        <div class="container mt-4 mb-5">
+            <form>
+            <div class="mb-3">
+                <label for="inputUser" class="form-label aquaText">Usuario: </label>
+                <input type="user" class="form-control" id="inputUser">
+            </div>
+            <div class="mb-3">
+                <label for="inputPassword" class="form-label aquaText">Contraseña: </label>
+                <input type="password" class="form-control" id="inputPassword">
+                <div id="userHelp" class="form-text aquaText">Su contraseña permanecerá segura y encriptada en nuestra base de datos.</div>
+            </div>
+            <button type="submit" class="btn btn-primary">Iniciar sesión</button>
+            </form>
+        </div>
+    </main>
+    <footer>
+        <div class="aboutContainer">
+            <p class="aboutText aquaText">Sobre nosotros: </p>
+        </div>
+    </footer>
+</body>
+</html>
