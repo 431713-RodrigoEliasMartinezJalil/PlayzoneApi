@@ -27,14 +27,20 @@ namespace PlayzoneApi
             builder.Services.AddControllers();
             builder.Services.AddOpenApi();
 
+            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+            builder.Services.AddEndpointsApiExplorer();
+            builder.Services.AddSwaggerGen();
+
             var app = builder.Build();
 
             // 3. Registrar Middleware Global de Excepciones (debe ir antes de los controladores)
-            app.UseMiddleware<GlobalExceptionMiddleware>();
+            app.UseMiddleware<ExceptionMiddleware>();
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {
+                app.UseSwagger();
+                app.UseSwaggerUI();
                 app.MapOpenApi();
             }
 

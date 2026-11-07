@@ -2,7 +2,7 @@
 using PlayzoneApi.Repositories;
 using PlayzoneApi.Repositories.Interfaces;
 
-namespace PlayzoneApi.DTOs
+namespace PlayzoneApi.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]

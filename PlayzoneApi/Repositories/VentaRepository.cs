@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using PlayzoneApi.Models;
+using PlayzoneApi.Repositories.Interfaces;
 
 namespace PlayzoneApi.Repositories
 {
