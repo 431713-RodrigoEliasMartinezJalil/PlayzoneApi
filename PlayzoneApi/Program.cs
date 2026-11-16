@@ -24,6 +24,22 @@ namespace PlayzoneApi
             builder.Services.AddScoped<ISoporteRepository, SoporteRepository>();
             builder.Services.AddScoped<IDashboardRepository, DashboardRepository>();
 
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("PlayZoneFrontend", policy =>
+                {
+                    policy
+                        .WithOrigins(
+                            "http://127.0.0.1:5500",
+                            "http://localhost:5500"
+                        )
+                        .AllowAnyHeader()
+                        .AllowAnyMethod();
+                });
+
+            });
+
+
             builder.Services.AddControllers();
             builder.Services.AddOpenApi();
 
@@ -46,6 +62,9 @@ namespace PlayzoneApi
 
             app.UseHttpsRedirection();
 
+            app.UseCors("PlayZoneFrontend");
+
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.MapControllers();

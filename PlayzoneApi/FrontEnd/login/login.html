@@ -21,7 +21,7 @@
     </header>
     <main class="content">
         <div class="container mt-4 mb-5">
-            <form>
+            <form id="loginForm">
             <div class="mb-3">
                 <label for="inputUser" class="form-label aquaText">Usuario: </label>
                 <input type="user" class="form-control" id="inputUser">
@@ -32,13 +32,18 @@
                 <div id="userHelp" class="form-text aquaText">Su contraseña permanecerá segura y encriptada en nuestra base de datos.</div>
             </div>
             <button type="submit" class="btn btn-primary">Iniciar sesión</button>
+            <p id="error" style="color:red"></p>
             </form>
         </div>
     </main>
     <footer>
         <div class="aboutContainer">
             <p class="aboutText aquaText">Sobre nosotros: </p>
+            <a href="https://github.com/431713-RodrigoEliasMartinezJalil/PlayzoneApi">
+                <img src="../assets/github-dark.webp" alt="github" id="github-image">
+            </a>
         </div>
     </footer>
+    <script src="login.js"></script>
 </body>
 </html>

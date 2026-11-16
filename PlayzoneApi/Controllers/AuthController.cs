@@ -1,7 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
 using PlayzoneApi.DTOs;
 using PlayzoneApi.Repositories;
 using PlayzoneApi.Repositories.Interfaces;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
 
 namespace PlayzoneApi.Controllers
 {
@@ -19,51 +23,76 @@ namespace PlayzoneApi.Controllers
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] LoginRequestDto request)
         {
-
-            if (string.IsNullOrWhiteSpace(request.EmailOrUsername) || string.IsNullOrWhiteSpace(request.Password))
+            try
             {
-                return BadRequest(new { mensaje = "Debe proporcionar usuario/email y contraseña." });
-            }
-
-            var usuario = await _usuarioRepository.ObtenerPorEmailONombreUsuarioAsync(request.EmailOrUsername);
-
-            if (usuario == null || usuario.PasswordHash != request.Password)
-            {
-                return Unauthorized(new { mensaje = "Credenciales inválidas." });
-            }
-
-            string estado = usuario.IdEstadoCuentaNavigation.Estado;
-
-            if (estado == "Suspendida")
-            {
-                return StatusCode(StatusCodes.Status403Forbidden, new
+                if (string.IsNullOrWhiteSpace(request.EmailOrUsername) || string.IsNullOrWhiteSpace(request.Password))
                 {
-                    mensaje = "Su cuenta se encuentra suspendida. Contacte a soporte."
-                });
-            }
+                    return BadRequest(new { mensaje = "Debe proporcionar usuario/email y contraseña." });
+                }
 
-            if (estado == "Pendiente")
-            {
-                return Unauthorized(new
+                var usuario = await _usuarioRepository.ObtenerPorEmailONombreUsuarioAsync(request.EmailOrUsername);
+
+                if (usuario == null || usuario.PasswordHash != request.Password)
                 {
-                    mensaje = "Cuenta pendiente de activación. Por favor confirme su correo electrónico."
-                });
+                    return Unauthorized(new { mensaje = "Credenciales inválidas." });
+                }
+
+                string estado = usuario.IdEstadoCuentaNavigation.Estado;
+
+                if (estado == "Suspendida")
+                {
+                    return StatusCode(StatusCodes.Status403Forbidden, new
+                    {
+                        mensaje = "Su cuenta se encuentra suspendida. Contacte a soporte."
+                    });
+                }
+
+                if (estado == "Pendiente")
+                {
+                    return Unauthorized(new
+                    {
+                        mensaje = "Cuenta pendiente de activación. Por favor confirme su correo electrónico."
+                    });
+                }
+
+                //var respuestaDto = new UsuarioSesionDto
+                //{
+                //    IdUsuario = usuario.IdUsuario,
+                //    NombreUsuario = usuario.NombreUsuario,
+                //    Email = usuario.Email,
+                //    NombreCompleto = $"{usuario.Nombre} {usuario.Apellido}".Trim(),
+                //    Pais = usuario.IdPaisNavigation.Nombre,
+                //    EstadoCuenta = usuario.IdEstadoCuentaNavigation.Estado,
+                //    Nivel = usuario.NivelesUsuario?.Nivel ?? 1,
+                //    Experiencia = usuario.NivelesUsuario?.Experiencia ?? 0,
+                //    AvatarUrl = usuario.AvatarUrl
+                //};
+
+                //return Ok(respuestaDto);
+                var claims = new Claim[]
+    {
+                    new Claim("usuario", usuario.NombreUsuario)
+    };
+
+                var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("clave-super-secreta-para-poc-123456"));
+                var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+
+                var token = new JwtSecurityToken(
+                    issuer: "JwtAuthPoc",
+                    audience: "JwtAuthPocUser",
+                    claims: claims,
+                    expires: DateTime.UtcNow.AddMinutes(30),
+                    signingCredentials: creds
+                );
+
+                var tokenString = new JwtSecurityTokenHandler().WriteToken(token);
+                return Ok(tokenString);
+            }
+            catch (Exception ex) 
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new { message = $"Error interno : {ex}" });
             }
 
-            var respuestaDto = new UsuarioSesionDto
-            {
-                IdUsuario = usuario.IdUsuario,
-                NombreUsuario = usuario.NombreUsuario,
-                Email = usuario.Email,
-                NombreCompleto = $"{usuario.Nombre} {usuario.Apellido}".Trim(),
-                Pais = usuario.IdPaisNavigation.Nombre,
-                EstadoCuenta = usuario.IdEstadoCuentaNavigation.Estado,
-                Nivel = usuario.NivelesUsuario?.Nivel ?? 1,
-                Experiencia = usuario.NivelesUsuario?.Experiencia ?? 0,
-                AvatarUrl = usuario.AvatarUrl
-            };
-
-            return Ok(respuestaDto);
         }
     }
 }
