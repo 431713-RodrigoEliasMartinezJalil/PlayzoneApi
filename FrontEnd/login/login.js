@@ -2,7 +2,7 @@ const form = document.getElementById('loginForm');
 const errorEl = document.getElementById('error')
 
     form.addEventListener('submit', async (e) => {
-      e.preventDefault(); // evita que la página se recargue
+        e.preventDefault();
         errorEl.textContent = '';
 
         const email = document.getElementById('inputUser').value;
@@ -23,7 +23,7 @@ const errorEl = document.getElementById('error')
         console.log(data);
         
         localStorage.setItem('token', data);
-        window.location.href = '../paginaPrincipal/index.html';
+        window.location.href = '../inicio/inicio.html';
         } catch (err) {
         errorEl.textContent = err.message;
         }
