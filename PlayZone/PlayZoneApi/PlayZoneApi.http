@@ -1,0 +1,6 @@
+@PlayZoneApi_HostAddress = http://localhost:5020
+
+GET {{PlayZoneApi_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
