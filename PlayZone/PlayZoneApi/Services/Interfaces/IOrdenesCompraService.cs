@@ -8,6 +8,6 @@ namespace PlayZoneApi.Services.Interfaces
 
         Task<OrdenCompraDTO> ObtenerPorIdAsync(int id);
 
-        Task<List<OrdenCompraDTO>> ObtenerPorUsuarioAsync(int idUsuario);
+        Task<List<OrdenCompraDTO>> ObtenerPorUsuarioAsync(string nombreUsuario);
     }
 }

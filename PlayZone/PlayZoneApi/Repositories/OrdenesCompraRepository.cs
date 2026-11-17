@@ -56,7 +56,7 @@ namespace PlayZoneApi.Repositories
         // OBTENER ORDENES POR USUARIO
         // =========================================
 
-        public async Task<List<Ordenes_Compra>> ObtenerPorUsuarioAsync(int idUsuario)
+        public async Task<List<Ordenes_Compra>> ObtenerPorUsuarioAsync(string nombreUsuario)
         {
             var ordenes = await _context.Ordenes_Compras
                 .AsNoTracking()
@@ -66,10 +66,11 @@ namespace PlayZoneApi.Repositories
                 .Include(o => o.id_estado_ordenNavigation)
                 .Include(o => o.Detalle_Ordens)
                     .ThenInclude(d => d.id_productoNavigation)
-                .Where(o => o.id_usuario == idUsuario)
+                .Where(o => o.id_usuarioNavigation.nombre_usuario == nombreUsuario)
                 .ToListAsync();
 
             return ordenes;
         }
+
     }
 }

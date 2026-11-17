@@ -54,12 +54,12 @@ namespace PlayZoneApi.Services
         // OBTENER ORDENES POR USUARIO
         // =========================================
 
-        public async Task<List<OrdenCompraDTO>> ObtenerPorUsuarioAsync(int idUsuario)
+        public async Task<List<OrdenCompraDTO>> ObtenerPorUsuarioAsync(string nombreUsuario)
         {
-            if (idUsuario <= 0)
-                throw new ArgumentException("El ID del usuario debe ser mayor a cero.");
+            if (string.IsNullOrWhiteSpace(nombreUsuario))
+                throw new ArgumentException("El nombre de usuario es obligatorio.");
 
-            var ordenes = await _repository.ObtenerPorUsuarioAsync(idUsuario);
+            var ordenes = await _repository.ObtenerPorUsuarioAsync(nombreUsuario);
 
             var listaDTO = new List<OrdenCompraDTO>();
 
@@ -70,6 +70,7 @@ namespace PlayZoneApi.Services
 
             return listaDTO;
         }
+
 
         // =========================================
         // MAPEAR ORDEN A DTO

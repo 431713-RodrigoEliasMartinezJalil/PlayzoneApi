@@ -1,9 +1,11 @@
 ﻿
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PlayZoneApi.Services.Interfaces;
 
 namespace PlayZoneApi.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class OrdenesCompraController : ControllerBase
@@ -58,13 +60,12 @@ namespace PlayZoneApi.Controllers
 
         // GET: api/OrdenesCompra/usuario/idUsuario
         [HttpGet]
-        [Route("usuario/{idUsuario:int}")]
-        public async Task<IActionResult> ObtenerPorUsuario([FromRoute]int idUsuario)
+        [Route("usuario")]
+        public async Task<IActionResult> ObtenerPorUsuario([FromQuery] string nombreUsuario)
         {
             try
             {
-                var ordenes = await _service.ObtenerPorUsuarioAsync(idUsuario);
-
+                var ordenes = await _service.ObtenerPorUsuarioAsync(nombreUsuario);
                 return Ok(ordenes);
             }
             catch (ArgumentException ex)
