@@ -1,48 +1,295 @@
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PlayZone</title>
-    <link
-        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
-        rel="stylesheet"
-    >
+
+    <title>PlayZone | Dashboard</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+          rel="stylesheet">
+
     <link rel="stylesheet" href="dashboard.css">
+
     <script src="dashboard.js" defer></script>
 </head>
+
 <body>
+
+    <!-- MENU DE NAVEGACION -->
     <header>
-        <nav class="navbar navbar-expand-lg bg-dark border-bottom border-body" data-bs-theme="dark">
+        <nav class="navbar navbar-expand-lg bg-dark border-bottom border-body"
+             data-bs-theme="dark">
+
             <div class="container-fluid">
-                <a class="navbar-brand" href="../inicio/inicio.html">PlayZone</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+
+                <a class="navbar-brand" href="../inicio/inicio.html">
+                    PlayZone
+                </a>
+
+                <button class="navbar-toggler"
+                        type="button"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#navbarNav"
+                        aria-controls="navbarNav"
+                        aria-expanded="false"
+                        aria-label="Abrir menú">
+
                     <span class="navbar-toggler-icon"></span>
                 </button>
+
                 <div class="collapse navbar-collapse" id="navbarNav">
+
                     <ul class="navbar-nav">
+
                         <li class="nav-item">
-                            <a class="nav-link" href="../inicio/inicio.html">Inicio</a>
+                            <a class="nav-link"
+                               href="../inicio/inicio.html">
+                                Inicio
+                            </a>
                         </li>
+
                         <li class="nav-item">
-                            <a class="nav-link" href="../productos/productos.html">Productos</a>
+                            <a class="nav-link"
+                               href="../productos/productos.html">
+                                Productos
+                            </a>
                         </li>
+
                         <li class="nav-item">
-                            <a class="nav-link" href="../ventas/ventas.html">Ventas</a>
+                            <a class="nav-link"
+                               href="../ventas/ventas.html">
+                                Ventas
+                            </a>
                         </li>
+
                         <li class="nav-item">
-                            <a class="nav-link active" href="#">Dashboard</a>
+                            <a class="nav-link active"
+                               href="#">
+                                Dashboard
+                            </a>
                         </li>
+
                     </ul>
                 </div>
             </div>
         </nav>
     </header>
-    <main>
+
+
+    <!-- CONTENIDO PRINCIPAL -->
+    <main class="container py-4">
+
+        <div class="dashboard-header mb-4">
+
+            <h1 class="h3 aquaText">
+                Panel de control
+            </h1>
+
+            <p class="text-light">
+                Resumen general de la actividad de PlayZone.
+            </p>
+
+        </div>
+
+
+        <!-- INDICADORES PRINCIPALES -->
+        <section class="row g-3 mb-4">
+
+            <div class="col-12 col-md-6 col-lg-3">
+                <article class="card dashboard-card h-100">
+                    <div class="card-body">
+
+                        <h2 class="card-title">
+                            Total de órdenes
+                        </h2>
+
+                        <p class="dashboard-number" id="totalOrdenes">
+                            --
+                        </p>
+
+                        <span>Órdenes registradas</span>
+
+                    </div>
+                </article>
+            </div>
+
+
+            <div class="col-12 col-md-6 col-lg-3">
+                <article class="card dashboard-card h-100">
+                    <div class="card-body">
+
+                        <h2 class="card-title">
+                            Pendientes
+                        </h2>
+
+                        <p class="dashboard-number text-warning"
+                           id="ordenesPendientes">
+                            --
+                        </p>
+
+                        <span>Órdenes por completar</span>
+
+                    </div>
+                </article>
+            </div>
+
+
+            <div class="col-12 col-md-6 col-lg-3">
+                <article class="card dashboard-card h-100">
+                    <div class="card-body">
+
+                        <h2 class="card-title">
+                            Completadas
+                        </h2>
+
+                        <p class="dashboard-number text-success"
+                           id="ordenesCompletadas">
+                            --
+                        </p>
+
+                        <span>Órdenes finalizadas</span>
+
+                    </div>
+                </article>
+            </div>
+
+
+            <div class="col-12 col-md-6 col-lg-3">
+                <article class="card dashboard-card h-100">
+                    <div class="card-body">
+
+                        <h2 class="card-title">
+                            Productos
+                        </h2>
+
+                        <p class="dashboard-number"
+                           id="totalProductos">
+                            --
+                        </p>
+
+                        <span>Productos registrados</span>
+
+                    </div>
+                </article>
+            </div>
+
+        </section>
+
+
+        <!-- INDICADORES SECUNDARIOS -->
+        <section class="row g-3 mb-4">
+
+            <div class="col-12 col-md-6">
+                <article class="card dashboard-card h-100">
+                    <div class="card-body">
+
+                        <h2 class="card-title">
+                            Usuarios registrados
+                        </h2>
+
+                        <p class="dashboard-number"
+                           id="totalUsuarios">
+                            --
+                        </p>
+
+                    </div>
+                </article>
+            </div>
+
+
+            <div class="col-12 col-md-6">
+                <article class="card dashboard-card h-100">
+                    <div class="card-body">
+
+                        <h2 class="card-title">
+                            Solicitudes de reembolso
+                        </h2>
+
+                        <p class="dashboard-number"
+                           id="totalReembolsos">
+                            --
+                        </p>
+
+                    </div>
+                </article>
+            </div>
+
+        </section>
+
+
+        <!-- DISTRIBUCION DE ORDENES -->
+        <section class="card dashboard-card mb-4">
+
+            <div class="card-body">
+
+                <h2 class="h5 mb-3">
+                    Distribución de órdenes
+                </h2>
+
+                <p class="text-light">
+                    Comparación de órdenes según su estado.
+                </p>
+
+                <div class="progress dashboard-progress"
+                     role="progressbar"
+                     aria-label="Distribución de órdenes">
+
+                    <div class="progress-bar bg-warning"
+                         id="barraPendientes"
+                         style="width: 0%">
+                    </div>
+
+                    <div class="progress-bar bg-success"
+                         id="barraCompletadas"
+                         style="width: 0%">
+                    </div>
+
+                    <div class="progress-bar bg-secondary"
+                         id="barraOtros"
+                         style="width: 0%">
+                    </div>
+
+                </div>
+
+                <div class="d-flex flex-wrap gap-4 mt-3">
+
+                    <span>
+                        <span class="estado-indicador pendiente"></span>
+                        Pendientes
+                    </span>
+
+                    <span>
+                        <span class="estado-indicador completada"></span>
+                        Completadas
+                    </span>
+
+                    <span>
+                        <span class="estado-indicador otros"></span>
+                        Otros estados
+                    </span>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ESTADO DE CARGA -->
+        <div id="mensajeDashboard"
+             class="text-center text-light mb-3"
+             role="status">
+
+            Cargando información...
+
+        </div>
 
     </main>
-    <footer>
 
-    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+
 </body>
 </html>

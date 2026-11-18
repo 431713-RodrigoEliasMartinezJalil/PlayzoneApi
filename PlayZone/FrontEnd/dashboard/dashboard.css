@@ -1,5 +1,112 @@
+
 body {
     background: url("../assets/fondo.jpg") no-repeat center center / cover fixed;
     min-height: 100vh;
     margin: 0;
+    color: #f8f9fa;
+}
+
+/* Contenedor principal */
+main.container {
+    max-width: 1200px;
+}
+
+/* Encabezado */
+.dashboard-header {
+    margin-bottom: 2rem;
+}
+
+.aquaText {
+    color: #55d6e8;
+}
+
+.dashboard-header p {
+    color: rgba(255, 255, 255, 0.75);
+}
+
+/* Tarjetas de resumen */
+.dashboard-card {
+    background: rgba(16, 24, 40, 0.90);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 16px;
+    color: #ffffff;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
+    height: 100%;
+    transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+    .dashboard-card:hover {
+        transform: translateY(-4px);
+        border-color: rgba(85, 214, 232, 0.5);
+    }
+
+    .dashboard-card .card-body {
+        padding: 1.4rem;
+    }
+
+    .dashboard-card .card-title {
+        color: #b8c4d6;
+        font-size: 0.95rem;
+        font-weight: 600;
+    }
+
+.dashboard-number {
+    color: #55d6e8;
+    font-size: 2.2rem;
+    font-weight: 700;
+    margin: 0.8rem 0 0.25rem;
+}
+
+.dashboard-card span {
+    color: #cbd5e1;
+    font-size: 0.85rem;
+}
+
+/* Indicadores de estados */
+.estado-indicador {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    margin-right: 0.4rem;
+}
+
+.pendiente {
+    background-color: #ffc107;
+}
+
+.completada {
+    background-color: #198754;
+}
+
+.otros {
+    background-color: #6c757d;
+}
+
+/* Barras de progreso */
+.dashboard-progress {
+    height: 22px;
+    background-color: rgba(255, 255, 255, 0.14);
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+    .dashboard-progress .progress-bar {
+        font-size: 0.8rem;
+        font-weight: 600;
+    }
+
+/* Adaptación a celulares */
+@media (max-width: 575px) {
+    .dashboard-header h1 {
+        font-size: 1.8rem;
+    }
+
+    .dashboard-number {
+        font-size: 1.8rem;
+    }
+
+    .dashboard-card .card-body {
+        padding: 1.1rem;
+    }
 }
