@@ -19,7 +19,6 @@ namespace PlayZoneApi.Controllers
 
         // LISTAR Y FILTRAR PRODUCTOS
         [HttpGet]
-        [Route("/api/Productos")]
         public async Task<IActionResult> ObtenerTodos([FromQuery] ProductoFiltroDTO filtros)
         {
             try
@@ -69,7 +68,7 @@ namespace PlayZoneApi.Controllers
                         mensaje = "Producto creado correctamente.",
                         id
                     });
-            }
+        }
             catch (ArgumentException ex)
             {
                 return BadRequest(new { mensaje = ex.Message });
@@ -141,7 +140,7 @@ namespace PlayZoneApi.Controllers
                     return NotFound(new { mensaje = "Producto no encontrado." });
 
                 return Ok(new { mensaje = "Producto eliminado correctamente." });
-            }
+        }
             catch (ArgumentException ex)
             {
                 return BadRequest(new { mensaje = ex.Message });

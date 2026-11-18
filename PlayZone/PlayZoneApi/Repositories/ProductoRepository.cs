@@ -21,7 +21,7 @@ namespace PlayZoneApi.Repositories
             var consulta = _context.Productos
                 .Include(p => p.id_tipo_productoNavigation)
                 .Include(p => p.id_estado_publicacionNavigation)
-                .AsQueryable();
+                .AsQueryable().Where(p => p.id_estado_publicacion != 3);
 
             if (!string.IsNullOrWhiteSpace(filtros.Titulo))
                 consulta = consulta.Where(p => p.titulo.Contains(filtros.Titulo));
@@ -78,7 +78,7 @@ namespace PlayZoneApi.Repositories
         // ELIMINAR PRODUCTO
         public async Task EliminarAsync(Producto producto)
         {
-            _context.Productos.Remove(producto);
+            producto.id_estado_publicacion = 3;
             await _context.SaveChangesAsync();
         }
     }
