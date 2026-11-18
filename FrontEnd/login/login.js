@@ -9,20 +9,25 @@ const errorEl = document.getElementById('error')
         const password = document.getElementById('inputPassword').value;
 
         try {
-        const response = await fetch('https://localhost:7206/api/Auth/login', {
+        const response = await fetch('https://localhost:7239/api/Auth/login', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ emailOrUsername: email, password })
+            body: JSON.stringify({ email, password })
         });
-
+        console.log(response);
+        
         if (!response.ok) {
             throw new Error('Credenciales incorrectas');
         }
 
-        const data = await response.text();
+        const data = await response.json();
         console.log(data);
         
+<<<<<<<< HEAD:FrontEnd/login/login.js
         localStorage.setItem('token', data);
+========
+        localStorage.setItem('token', data.token);
+>>>>>>>> Enzo:PlayZone/FrontEnd/login/login.js
         window.location.href = '../inicio/inicio.html';
         } catch (err) {
         errorEl.textContent = err.message;

@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PlayZone</title>
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+    >
+    <link rel="stylesheet" href="productos.css">
+    <script src="productos.js" defer></script>
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg bg-dark border-bottom border-body" data-bs-theme="dark">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="../inicio/inicio.html">PlayZone</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link" href="../inicio/inicio.html">Inicio</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" href="#">Productos</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="../ventas/ventas.html">Ventas</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="../dashboard/dashboard.html">Dashboard</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <main>
+<div class="container py-4">
+    <h1 class="h3 mb-4 aquaText">Productos</h1>
+    <form id="formulario" class="row g-3 mb-4">
+        <input type="hidden" id="idProducto">
+    
+        <div class="col-md-6">
+            <label class="form-label aquaText">Título</label>
+            <input type="text" id="titulo" class="form-control" required>
+        </div>
+        <div class="col-md-6">
+            <label class="form-label aquaText">Descripción</label>
+            <input type="text" id="descripcion" class="form-control">
+        </div>
+        <div class="col-md-3">
+            <label class="form-label aquaText">ID tipo de producto</label>
+            <input type="number" id="idTipoProducto" class="form-control" required>
+        </div>
+        <div class="col-md-3">
+            <label class="form-label aquaText">ID estado de publicación</label>
+            <input type="number" id="idEstadoPublicacion" class="form-control" required>
+        </div>
+        <div class="col-md-2">
+            <label class="form-label aquaText">Clasificación</label>
+            <select id="clasificacionEdad" class="form-select" required>
+            <option value="">Elegí...</option>
+            <option>Libre</option>
+            <option>3+</option>
+            <option>7+</option>
+            <option>12+</option>
+            <option>16+</option>
+            <option>18+</option>
+            </select>
+        </div>
+        <div class="col-md-2">
+            <label class="form-label aquaText">Lanzamiento</label>
+            <input type="date" id="fechaLanzamiento" class="form-control" required>
+        </div>
+        <div class="col-md-2">
+            <label class="form-label aquaText">ID producto padre</label>
+            <input type="number" id="idProductoPadre" class="form-control">
+        </div>
+    
+        <div class="col-12">
+            <button type="submit" class="btn btn-primary">Crear/Editar</button>
+            <button type="button" id="btnCancelar" class="btn btn-secondary">Limpiar</button>
+            <p class="aquaText">(seleccione editar en un producto de abajo para editar)</p>
+        </div>
+        </form>
+    
+        <div class="border rounded-3 overflow-hidden">
+        <table class="table table-striped mb-0">
+        <thead>
+            <tr>
+            <th>ID</th>
+            <th>Título</th>
+            <th>Descripción</th>
+            <th>Tipo</th>
+            <th>Estado</th>
+            <th>Clasificación</th>
+            <th>Lanzamiento</th>
+            <th>Padre</th>
+            <th></th>
+            </tr>
+        </thead>
+        <tbody id="tabla"></tbody>
+        </table>
+        </div>
+    </div>
+    </main>
+    <footer>
+    </footer>
+    <script src="productos.js"></script>
+</body>
+</html>
