@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using PlayZoneApi.DTOs;
 using PlayZoneApi.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
+using PlayZoneApi.DTOs.ProductoDTTOs;
 
 namespace PlayZoneApi.Controllers
 {

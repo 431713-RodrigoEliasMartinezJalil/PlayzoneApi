@@ -1,4 +1,4 @@
-﻿using PlayZoneApi.DTOs;
+﻿using PlayZoneApi.DTOs.UsuarioDTOs;
 using PlayZoneApi.Models;
 using PlayZoneApi.Repositories.Interfaces;
 using PlayZoneApi.Services.Interfaces;

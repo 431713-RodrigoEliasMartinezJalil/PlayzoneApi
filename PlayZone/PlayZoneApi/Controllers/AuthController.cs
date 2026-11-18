@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
-using PlayZoneApi.DTOs;
+using PlayZoneApi.DTOs.UsuarioDTOs;
 using PlayZoneApi.Services.Interfaces;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;

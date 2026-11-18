@@ -57,6 +57,9 @@ builder.Services.AddScoped<IProductoService, ProductoService>();
 // ORDENES DE COMPRA
 builder.Services.AddScoped<IOrdenesCompraRepository, OrdenesCompraRepository>();
 builder.Services.AddScoped<IOrdenesCompraService, OrdenesCompraService>();
+// REEMBOLSOS
+builder.Services.AddScoped<IReembolsosRepository, ReembolsosRepository>();
+builder.Services.AddScoped<IReembolsosService, ReembolsosService>();
 
 var jwtKey = builder.Configuration["Jwt:Key"]!;
 

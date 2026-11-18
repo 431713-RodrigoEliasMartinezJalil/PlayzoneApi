@@ -1,5 +1,4 @@
-﻿
-using PlayZoneApi.DTOs;
+﻿using PlayZoneApi.DTOs.ProductoDTTOs;
 using PlayZoneApi.Models;
 
 namespace PlayZoneApi.Repositories.Interfaces

@@ -1,4 +1,4 @@
-﻿using PlayZoneApi.DTOs;
+﻿using PlayZoneApi.DTOs.ProductoDTTOs;
 
 namespace PlayZoneApi.Services.Interfaces
 {

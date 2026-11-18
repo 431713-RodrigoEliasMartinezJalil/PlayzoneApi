@@ -1,4 +1,4 @@
-﻿using PlayZoneApi.DTOs;
+﻿using PlayZoneApi.DTOs.UsuarioDTOs;
 using PlayZoneApi.Models;
 
 namespace PlayZoneApi.Services.Interfaces

@@ -1,6 +1,6 @@
-﻿
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using PlayZoneApi.DTOs.OrdenDTOs;
 using PlayZoneApi.Services.Interfaces;
 
 namespace PlayZoneApi.Controllers
@@ -71,6 +71,77 @@ namespace PlayZoneApi.Controllers
             catch (ArgumentException ex)
             {
                 return BadRequest(new { mensaje = ex.Message });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { mensaje = ex.Message });
+            }
+        }
+
+        // =========================================
+        // CREAR ORDEN DE COMPRA
+        // =========================================
+
+        // POST: api/OrdenesCompra
+        [HttpPost]
+        public async Task<IActionResult> Crear([FromBody] OrdenCompraCrearDTO dto)
+        {
+            try
+            {
+                var ordenCreada = await _service.CrearAsync(dto);
+
+                return CreatedAtAction(
+                    nameof(ObtenerPorId),
+                    new { id = ordenCreada.IdOrden },
+                    ordenCreada
+                );
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(new { mensaje = ex.Message });
+            }
+            catch (KeyNotFoundException ex)
+            {
+                return NotFound(new { mensaje = ex.Message });
+            }
+            catch (InvalidOperationException ex)
+            {
+                return StatusCode(500, new { mensaje = ex.Message });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { mensaje = ex.Message });
+            }
+        }
+
+        // =========================================
+        // ACTUALIZAR ESTADO DE ORDEN
+        // =========================================
+
+        // PUT: api/OrdenesCompra/5
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Actualizar(
+            int id,
+            [FromBody] OrdenCompraActualizarDTO dto)
+        {
+            try
+            {
+                var ordenActualizada = await _service.ActualizarAsync(id, dto);
+
+                return Ok(ordenActualizada);
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(new { mensaje = ex.Message });
+            }
+            catch (KeyNotFoundException ex)
+            {
+                return NotFound(new { mensaje = ex.Message });
+            }
+            catch (InvalidOperationException ex)
+            {
+                return Conflict(new { mensaje = ex.Message });
             }
             catch (Exception ex)
             {

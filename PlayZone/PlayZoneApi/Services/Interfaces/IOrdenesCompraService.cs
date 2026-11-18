@@ -1,4 +1,4 @@
-﻿using PlayZoneApi.DTOs;
+﻿using PlayZoneApi.DTOs.OrdenDTOs;
 
 namespace PlayZoneApi.Services.Interfaces
 {
@@ -9,5 +9,9 @@ namespace PlayZoneApi.Services.Interfaces
         Task<OrdenCompraDTO> ObtenerPorIdAsync(int id);
 
         Task<List<OrdenCompraDTO>> ObtenerPorUsuarioAsync(string nombreUsuario);
+
+        Task<OrdenCompraDTO> CrearAsync(OrdenCompraCrearDTO dto);
+
+        Task<OrdenCompraDTO> ActualizarAsync(int id, OrdenCompraActualizarDTO dto);
     }
 }
