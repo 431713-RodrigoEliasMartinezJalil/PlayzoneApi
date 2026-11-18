@@ -28,3 +28,8 @@ body {
 #github-image:hover{
     transform: scale(1.1);
 }
+
+#error{
+    color: red;
+    min-height: 30px;
+}
