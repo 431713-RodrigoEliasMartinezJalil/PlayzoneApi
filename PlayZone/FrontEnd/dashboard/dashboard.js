@@ -1,4 +1,4 @@
-const API = "http://localhost:5020/api/Dashboard/resumen";
+const API = "https://localhost:7239/api/Dashboard/resumen";
 
 const TOKEN = localStorage.getItem("token");
 

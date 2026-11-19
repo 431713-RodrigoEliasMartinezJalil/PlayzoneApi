@@ -9,19 +9,18 @@ form.addEventListener('submit', async (e) => {
     const password = document.getElementById('inputPassword').value;
 
     try {
-        const response = await fetch('http://localhost:5020/api/Auth/login', {
+        const response = await fetch('https://localhost:7239/api/Auth/login', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ email, password })
         });
-        console.log(response);
 
         if (!response.ok) {
             throw new Error('Credenciales incorrectas');
         }
 
         const data = await response.json();
-        localStorage.setItem('token', data.token ?? data);
+        localStorage.setItem('token', data.token);
 
         window.location.href = '../inicio/inicio.html';
     } catch (err) {
