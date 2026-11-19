@@ -16,31 +16,24 @@ namespace PlayZoneApi.Services
         // OBTENER RESUMEN GENERAL DEL DASHBOARD
         public async Task<DashboardResumenDTO> ObtenerResumenAsync()
         {
-            var resumen = new DashboardResumenDTO();
-
-            // RESUMEN DE ORDENES
-            resumen.TotalOrdenes =
-                await _repository.ObtenerTotalOrdenesAsync();
-
-            resumen.OrdenesPendientes =
-                await _repository.ObtenerOrdenesPorEstadoAsync("Pendiente");
-
-            resumen.OrdenesCompletadas =
-                await _repository.ObtenerOrdenesPorEstadoAsync("Completada");
-
-            // INFORMACION GENERAL
-            resumen.TotalProductos =
-                await _repository.ObtenerTotalProductosAsync();
-
-            resumen.TotalUsuarios =
-                await _repository.ObtenerTotalUsuariosAsync();
-
-            // REEMBOLSOS
-            resumen.TotalReembolsos =
-                await _repository.ObtenerTotalReembolsosAsync();
-
-            return resumen;
+            return await _repository.ObtenerResumenAsync();
         }
+
+        public async Task<List<IngresoMensualDTO>> ObtenerIngresosMensualesAsync(int anio)
+        {
+            return await _repository.ObtenerIngresosMensualesAsync(anio);
+        }
+
+        public async Task<List<VideojuegoMasVendidoDTO>> ObtenerVideojuegosMasVendidosAsync(int limite)
+        {
+            return await _repository.ObtenerVideojuegosMasVendidosAsync(limite);
+        }
+
+        public async Task<List<ClienteMayorGastoDTO>> ObtenerClientesMayorGastoAsync(int limite)
+        {
+            return await _repository.ObtenerClientesMayorGastoAsync(limite);
+        }
+
     }
 }
 

@@ -2,16 +2,30 @@
 {
     public class DashboardResumenDTO
     {
-        // RESUMEN DE TRANSACCIONES
+        public int ProductosPublicados { get; set; }
+
         public int TotalOrdenes { get; set; }
+
         public int OrdenesPendientes { get; set; }
+
         public int OrdenesCompletadas { get; set; }
 
-        // INFORMACIÓN GENERAL
-        public int TotalProductos { get; set; }
+        public int ReembolsosPendientes { get; set; }
+
         public int TotalUsuarios { get; set; }
 
         // REEMBOLSOS
         public int TotalReembolsos { get; set; }
+
+        public List<VentasPorMonedaDTO> VentasPorMoneda { get; set; }
+    }
+
+    public class VentasPorMonedaDTO
+    {
+        public string Moneda { get; set; }
+
+        public string CodigoMoneda { get; set; }
+
+        public decimal TotalVendido { get; set; }
     }
 }
