@@ -1,0 +1,43 @@
+body {
+    background: url("../assets/fondo.jpg") no-repeat center center / cover fixed;
+    min-height: 100vh;
+    margin: 0;
+}
+
+.aquaText{
+    color: aqua;
+}
+
+.hero {
+    min-height: calc(100vh - 46px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 30px;
+}
+
+.hero-content {
+    max-width: 850px;
+}
+
+.hero-tag {
+    color: aqua;
+    font-size: 14px;
+    font-weight: bold;
+    letter-spacing: 4px;
+}
+
+.hero-h1 {
+    font-size: clamp(35px, 5vw, 65px);
+    color: white;
+    margin: 20px 0;
+    font-weight: 800;
+}
+
+.hero-p {
+    color: #aaa;
+    font-size: 18px;
+    line-height: 1.7;
+    margin-bottom: 35px;
+}
