@@ -60,6 +60,9 @@ builder.Services.AddScoped<IOrdenesCompraService, OrdenesCompraService>();
 // REEMBOLSOS
 builder.Services.AddScoped<IReembolsosRepository, ReembolsosRepository>();
 builder.Services.AddScoped<IReembolsosService, ReembolsosService>();
+// DASHBOARD
+builder.Services.AddScoped<IDashboardRepository, DashboardRepository>();
+builder.Services.AddScoped<IDashboardService, DashboardService>();
 
 var jwtKey = builder.Configuration["Jwt:Key"]!;
 

@@ -1,9 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using PlayZoneApi.DTOs.ReembolsoDTOs;
 using PlayZoneApi.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 
 namespace PlayZoneApi.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class ReembolsosController : ControllerBase
