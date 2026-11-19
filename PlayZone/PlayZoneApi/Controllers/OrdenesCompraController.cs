@@ -118,9 +118,9 @@ namespace PlayZoneApi.Controllers
         // ACTUALIZAR ESTADO DE ORDEN
         // =========================================
 
-        // PUT: api/OrdenesCompra/5
+        // PUT: api/OrdenesCompra/estado/5
 
-        [HttpPut("{id}")]
+        [HttpPut("estado/{id}")]
         public async Task<IActionResult> Actualizar(
             int id,
             [FromBody] OrdenCompraActualizarDTO dto)
@@ -142,6 +142,76 @@ namespace PlayZoneApi.Controllers
             catch (InvalidOperationException ex)
             {
                 return Conflict(new { mensaje = ex.Message });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { mensaje = ex.Message });
+            }
+        }
+
+        // =========================================
+        // BAJA LOGICA DE ORDEN
+        // =========================================
+
+        // DELETE: api/OrdenesCompra/5
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Eliminar(int id)
+        {
+            try
+            {
+                await _service.EliminarAsync(id);
+
+                return Ok("Orden eliminada");
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(new { mensaje = ex.Message });
+            }
+            catch (KeyNotFoundException ex)
+            {
+                return NotFound(new { mensaje = ex.Message });
+            }
+            catch (InvalidOperationException ex)
+            {
+                return Conflict(new { mensaje = ex.Message });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { mensaje = ex.Message });
+            }
+        }
+
+        // =========================================
+        // AZTUALIZAR COMPLETRA UNA ORDEN
+        // =========================================
+
+        // PUT: api/OrdenesCompra/5
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> ActualizarCompleto(int id, [FromBody] OrdenCompraCrearDTO dto)
+        {
+            try
+            {
+                bool ordenActualizada = await _service.CrearCompletoAsync(id, dto);
+                
+                if (ordenActualizada)
+                {
+                    return Ok("Orden actualizada con éxito.");
+                }
+                throw new InvalidOperationException("Error al actualizar.");
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(new { mensaje = ex.Message });
+            }
+            catch (KeyNotFoundException ex)
+            {
+                return NotFound(new { mensaje = ex.Message });
+            }
+            catch (InvalidOperationException ex)
+            {
+                return StatusCode(500, new { mensaje = ex.Message });
             }
             catch (Exception ex)
             {

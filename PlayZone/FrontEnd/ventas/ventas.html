@@ -39,7 +39,57 @@
         </nav>
     </header>
     <main>
+        <div class="container py-4">
+            <h1 class="h3 mb-4 aquaText">Órdenes de compra</h1>
 
+            <form id="formulario" class="row g-3 mb-4">
+                <input type="hidden" id="idOrden">
+    
+                <div class="col-md-4">
+                    <label class="form-label aquaText">ID usuario</label>
+                    <input type="number" id="idUsuario" class="form-control" min="1" required>
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label aquaText">ID método de pago</label>
+                    <input type="number" id="idMetodoPago" class="form-control" min="1" required>
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label aquaText">ID moneda</label>
+                    <input type="number" id="idMoneda" class="form-control" min="1" required>
+                </div>
+    
+                <div class="col-12">
+                    <label class="form-label aquaText">Productos</label>
+                    <div id="detalles"></div>
+                    <button type="button" id="btnAgregar" class="btn btn-sm btn-outline-primary">+ Agregar producto</button>
+                </div>
+            
+                <div class="col-12">
+                    <button type="submit" class="btn btn-primary">Crear/Editar</button>
+                    <button type="button" id="btnCancelar" class="btn btn-secondary">Limpiar</button>
+                    <p class="aquaText">(seleccione editar en una orden de abajo para editar)</p>
+                </div>
+            </form>
+    
+            <div class="border rounded-3 overflow-hidden">
+                <table class="table table-striped mb-0">
+                    <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Usuario</th>
+                        <th>Fecha</th>
+                        <th>Pago</th>
+                        <th>Moneda</th>
+                        <th>Estado</th>
+                        <th>Productos</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody id="tabla"></tbody>
+                </table>
+            </div>
+        </div>
+        <script src="ventas.js"></script>
     </main>
     <footer>
 

@@ -28,6 +28,7 @@ namespace PlayZoneApi.Repositories
                 .Include(o => o.id_estado_ordenNavigation)
                 .Include(o => o.Detalle_Ordens)
                     .ThenInclude(d => d.id_productoNavigation)
+                .Where(p => p.id_estado_orden != 3)
                 .ToListAsync();
 
             return ordenes;
@@ -202,5 +203,40 @@ namespace PlayZoneApi.Repositories
             await _context.SaveChangesAsync();
         }
 
+        // =========================================
+        // CREAR ORDEN DE COMPRA COMPLETO
+        // =========================================
+
+        public async Task<bool> CrearCompletoAsync(int id, Ordenes_Compra orden)
+        {
+            try
+            {
+                // Busco la orden para actualizar
+                Ordenes_Compra? viejaOrden = await _context.Ordenes_Compras
+                .Include(o => o.Detalle_Ordens)
+                .FirstOrDefaultAsync(o => o.id_orden == id);
+                // Valido que exista
+                if (viejaOrden == null)
+                {
+                    throw new InvalidOperationException("La orden a actualizar no existe.");
+                }
+
+                // Actualizamos la orden
+                viejaOrden.id_usuario = orden.id_usuario;
+                viejaOrden.id_metodo_pago = orden.id_metodo_pago;
+                viejaOrden.id_moneda = orden.id_moneda;
+                _context.Detalle_Ordens.RemoveRange(viejaOrden.Detalle_Ordens);
+                viejaOrden.Detalle_Ordens = orden.Detalle_Ordens;
+
+                // Guardamos todo en la base de datos.
+                await _context.SaveChangesAsync();
+
+                return true;
+            }
+            catch
+            {
+                throw new KeyNotFoundException("Ocurrió un error al intentar actualizar.");
+            }
+        }
     }
 }

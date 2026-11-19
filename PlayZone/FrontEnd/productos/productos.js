@@ -9,10 +9,11 @@ const HEADERS = {
 
 const tabla = document.getElementById("tabla");
 const formulario = document.getElementById("formulario");
+let productos = [];
 
 async function cargarProductos() {
     const respuesta = await fetch(API, { headers: HEADERS });
-    const productos = await respuesta.json();
+    productos = await respuesta.json();
 
     tabla.innerHTML = "";
     for (const p of productos) {
@@ -27,7 +28,7 @@ async function cargarProductos() {
             <td>${p.fechaLanzamiento}</td>
             <td>${p.idProductoPadre ?? ""}</td>
             <td>
-            <button class="btn btn-sm btn-warning" onclick='editar(${JSON.stringify(p)})'>Editar</button>
+            <button class="btn btn-sm btn-warning" onclick="editar(${p.idProducto})">Editar</button>
             <button class="btn btn-sm btn-danger" onclick="eliminar(${p.idProducto})">Eliminar</button>
             </td>
         </tr>`;
@@ -77,7 +78,8 @@ formulario.addEventListener("submit", async (e) => {
     cargarProductos();
 });
 
-function editar(p) {
+function editar(id) {
+    const p = productos.find((x) => x.idProducto === id);
     document.getElementById("idProducto").value = p.idProducto;
     document.getElementById("titulo").value = p.titulo;
     document.getElementById("descripcion").value = p.descripcion;

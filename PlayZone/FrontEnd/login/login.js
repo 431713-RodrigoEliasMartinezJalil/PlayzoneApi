@@ -21,13 +21,10 @@ const errorEl = document.getElementById('error')
         }
 
         const data = await response.json();
-        console.log(data);
         
-<<<<<<<< HEAD:FrontEnd/login/login.js
         localStorage.setItem('token', data);
-========
+
         localStorage.setItem('token', data.token);
->>>>>>>> Enzo:PlayZone/FrontEnd/login/login.js
         window.location.href = '../inicio/inicio.html';
         } catch (err) {
         errorEl.textContent = err.message;
