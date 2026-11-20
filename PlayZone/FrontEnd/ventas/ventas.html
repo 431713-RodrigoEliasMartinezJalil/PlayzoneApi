@@ -50,12 +50,21 @@
                     <input type="number" id="idUsuario" class="form-control" min="1" required>
                 </div>
                 <div class="col-md-4">
-                    <label class="form-label aquaText">ID método de pago</label>
-                    <input type="number" id="idMetodoPago" class="form-control" min="1" required>
+                    <label class="form-label aquaText">Método de pago</label>
+                    <select id="idMetodoPago" class="form-select" required>
+                        <option value="4">Mercado Pago</option>
+                        <option value="3">PayPal</option>
+                        <option value="1">Tarjeta de crédito</option>
+                        <option value="2">Tarjeta de débito</option>
+                        <option value="5">Transferencia bancaria</option>
+                    </select>
                 </div>
                 <div class="col-md-4">
-                    <label class="form-label aquaText">ID moneda</label>
-                    <input type="number" id="idMoneda" class="form-control" min="1" required>
+                    <label class="form-label aquaText">Moneda</label>
+                    <select id="idMoneda" class="form-select" required>
+                        <option value="1">Dólar Estadounidense</option>
+                        <option value="2">Peso Argentino</option>
+                    </select>
                 </div>
     
                 <div class="col-12">

@@ -53,12 +53,21 @@
             <input type="text" id="descripcion" class="form-control">
         </div>
         <div class="col-md-3">
-            <label class="form-label aquaText">ID tipo de producto</label>
-            <input type="number" id="idTipoProducto" class="form-control" required>
+            <label class="form-label aquaText">Tipo de producto</label>
+            <select id="idTipoProducto" class="form-select" required>
+                <option value="1">Juego base</option>
+                <option value="2">DLC</option>
+                <option value="3">Expansión</option>
+                <option value="4">Banda sonora</option>
+            </select>
         </div>
         <div class="col-md-3">
-            <label class="form-label aquaText">ID estado de publicación</label>
-            <input type="number" id="idEstadoPublicacion" class="form-control" required>
+            <label class="form-label aquaText">Estado de publicación</label>
+            <select id="idEstadoPublicacion" class="form-select" required>
+                <option value="1">Publicado</option>
+                <option value="2">En desarrollo</option>
+                <option value="3">Retirado</option>
+            </select>
         </div>
         <div class="col-md-2">
             <label class="form-label aquaText">Clasificación</label>
