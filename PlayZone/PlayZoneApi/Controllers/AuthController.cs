@@ -110,5 +110,33 @@ namespace PlayZoneApi.Controllers
                 });
             }
         }
+
+        [HttpPost("register")]
+        public async Task<IActionResult> Register([FromBody] UserRegisterDTO registro)
+        {
+            try
+            {
+                var usuario = await _service.RegistrarAsync(registro);
+
+                return Created("api/Auth/register", new
+                {
+                    idUsuario = usuario.id_usuario,
+                    nombreUsuario = usuario.nombre_usuario,
+                    email = usuario.email
+                });
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+            catch (InvalidOperationException ex)
+            {
+                return Conflict(new { message = ex.Message });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = ex.Message });
+            }
+        }
     }
 }

@@ -1,115 +1,369 @@
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PlayZone</title>
-    <link
-        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
-        rel="stylesheet"
-    >
+    <title>PlayZone | Productos</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="productos.css">
+
     <script src="productos.js" defer></script>
 </head>
+
 <body>
-    <header>
-        <nav class="navbar navbar-expand-lg bg-dark border-bottom border-body" data-bs-theme="dark">
-            <div class="container-fluid">
-                <a class="navbar-brand" href="../inicio/inicio.html">PlayZone</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav">
-                        <li class="nav-item">
-                            <a class="nav-link" href="../inicio/inicio.html">Inicio</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link active" href="#">Productos</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="../ventas/ventas.html">Ventas</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="../dashboard/dashboard.html">Dashboard</a>
-                        </li>
-                    </ul>
-                </div>
+
+    <!-- NAVBAR -->
+    <nav class="navbar navbar-expand-lg navbar-dark navbar-playzone">
+        <div class="container-fluid px-4">
+
+            <a class="navbar-brand fw-bold" href="../inicio/inicio.html">
+                PLAY<span>ZONE</span>
+            </a>
+
+            <button class="navbar-toggler" type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#navbarMenu">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarMenu">
+
+                <ul class="navbar-nav ms-4 me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="../inicio/inicio.html">Inicio</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link active" href="productos.html">Productos</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="../ventas/ventas.html">Órdenes de compra</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="../dashboard/dashboard.html">Dashboard</a>
+                    </li>
+                </ul>
+
+                <span class="navbar-text">
+                    Panel administrativo
+                </span>
+
             </div>
-        </nav>
-    </header>
-    <main>
-<div class="container py-4">
-    <h1 class="h3 mb-4 aquaText">Productos</h1>
-    <form id="formulario" class="row g-3 mb-4">
-        <input type="hidden" id="idProducto">
-    
-        <div class="col-md-6">
-            <label class="form-label aquaText">Título</label>
-            <input type="text" id="titulo" class="form-control" required>
         </div>
-        <div class="col-md-6">
-            <label class="form-label aquaText">Descripción</label>
-            <input type="text" id="descripcion" class="form-control">
-        </div>
-        <div class="col-md-3">
-            <label class="form-label aquaText">ID tipo de producto</label>
-            <input type="number" id="idTipoProducto" class="form-control" required>
-        </div>
-        <div class="col-md-3">
-            <label class="form-label aquaText">ID estado de publicación</label>
-            <input type="number" id="idEstadoPublicacion" class="form-control" required>
-        </div>
-        <div class="col-md-2">
-            <label class="form-label aquaText">Clasificación</label>
-            <select id="clasificacionEdad" class="form-select" required>
-            <option value="">Elegí...</option>
-            <option>Libre</option>
-            <option>3+</option>
-            <option>7+</option>
-            <option>12+</option>
-            <option>16+</option>
-            <option>18+</option>
-            </select>
-        </div>
-        <div class="col-md-2">
-            <label class="form-label aquaText">Lanzamiento</label>
-            <input type="date" id="fechaLanzamiento" class="form-control" required>
-        </div>
-        <div class="col-md-2">
-            <label class="form-label aquaText">ID producto padre</label>
-            <input type="number" id="idProductoPadre" class="form-control">
-        </div>
-    
-        <div class="col-12">
-            <button type="submit" class="btn btn-primary">Crear/Editar</button>
-            <button type="button" id="btnCancelar" class="btn btn-secondary">Limpiar</button>
-            <p class="aquaText">(seleccione editar en un producto de abajo para editar)</p>
-        </div>
-        </form>
-    
-        <div class="border rounded-3 overflow-hidden">
-        <table class="table table-striped mb-0">
-        <thead>
-            <tr>
-            <th>ID</th>
-            <th>Título</th>
-            <th>Descripción</th>
-            <th>Tipo</th>
-            <th>Estado</th>
-            <th>Clasificación</th>
-            <th>Lanzamiento</th>
-            <th>Padre</th>
-            <th></th>
-            </tr>
-        </thead>
-        <tbody id="tabla"></tbody>
-        </table>
+    </nav>
+
+
+    <!-- CONTENIDO PRINCIPAL -->
+    <main class="container-fluid px-4 py-4">
+
+        <!-- ENCABEZADO -->
+        <section class="page-header mb-4">
+
+            <div>
+                <span class="section-label">ADMINISTRACIÓN</span>
+                <h1>Productos</h1>
+                <p>Administrá los juegos, expansiones y contenidos de PlayZone.</p>
+            </div>
+
+            <button class="btn btn-primary btn-new-product"
+                    data-bs-toggle="modal"
+                    data-bs-target="#modalProducto"
+                    id="btnNuevoProducto">
+                + Nuevo producto
+            </button>
+
+        </section>
+
+
+        <!-- FILTROS -->
+        <section class="filter-card mb-4">
+
+            <div class="row g-3 align-items-end">
+
+                <div class="col-lg-4 col-md-6">
+                    <label for="buscarTitulo" class="form-label">
+                        Buscar producto
+                    </label>
+
+                    <input type="text"
+                           class="form-control"
+                           id="buscarTitulo"
+                           placeholder="Escribí el título de un juego...">
+                </div>
+
+                <div class="col-lg-2 col-md-6">
+                    <label for="filtroTipo" class="form-label">
+                        Tipo
+                    </label>
+
+                    <select class="form-select" id="filtroTipo">
+                        <option value="">Todos los tipos</option>
+                        <option value="1">Juego Base</option>
+                        <option value="2">DLC</option>
+                        <option value="3">Expansión</option>
+                        <option value="4">Banda Sonora</option>
+                    </select>
+                </div>
+
+                <div class="col-lg-2 col-md-6">
+                    <label for="filtroEstado" class="form-label">
+                        Estado
+                    </label>
+
+                    <select class="form-select" id="filtroEstado">
+                        <option value="">Todos los estados</option>
+                        <option value="1">Publicado</option>
+                        <option value="2">En Desarrollo</option>
+                        <option value="3">Retirado</option>
+                    </select>
+                </div>
+
+                <div class="col-lg-2 col-md-6">
+                    <label for="filtroClasificacion" class="form-label">
+                        Clasificación
+                    </label>
+
+                    <select class="form-select" id="filtroClasificacion">
+                        <option value="">Todas</option>
+                        <option value="Libre">Libre</option>
+                        <option value="3+">3+</option>
+                        <option value="7+">7+</option>
+                        <option value="12+">12+</option>
+                        <option value="16+">16+</option>
+                        <option value="18+">18+</option>
+                    </select>
+                </div>
+
+                <div class="col-lg-2 col-md-12">
+                    <button class="btn btn-outline-light w-100"
+                            type="button"
+                            id="btnLimpiarFiltros">
+                        Limpiar filtros
+                    </button>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- TABLA DE PRODUCTOS -->
+        <section class="products-card">
+
+            <div class="products-card-header">
+                <div>
+                    <h2>Catálogo de productos</h2>
+                    <p>Listado de productos registrados en el sistema.</p>
+                </div>
+
+                <span class="products-counter" id="contadorProductos">
+                    0 productos
+                </span>
+            </div>
+
+            <div class="table-responsive">
+
+                <table class="table products-table align-middle mb-0">
+
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Producto</th>
+                            <th>Tipo</th>
+                            <th>Estado</th>
+                            <th>Clasificación</th>
+                            <th>Lanzamiento</th>
+                            <th>Producto padre</th>
+                            <th class="text-end">Acciones</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="tabla">
+                        <tr>
+                            <td colspan="8" class="text-center py-5">
+                                Cargando productos...
+                            </td>
+                        </tr>
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- MODAL CREAR / EDITAR PRODUCTO -->
+    <div class="modal fade" id="modalProducto" tabindex="-1"
+         aria-labelledby="tituloModalProducto" aria-hidden="true">
+
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+
+            <div class="modal-content modal-playzone">
+
+                <div class="modal-header">
+
+                    <div>
+                        <span class="section-label">CATÁLOGO</span>
+                        <h5 class="modal-title" id="tituloModalProducto">
+                            Nuevo producto
+                        </h5>
+                    </div>
+
+                    <button type="button"
+                            class="btn-close btn-close-white"
+                            data-bs-dismiss="modal"
+                            aria-label="Cerrar">
+                    </button>
+
+                </div>
+
+
+                <form id="formulario">
+
+                    <div class="modal-body">
+
+                        <input type="hidden" id="idProducto">
+
+                        <div class="row g-3">
+
+                            <div class="col-md-8">
+                                <label for="titulo" class="form-label">
+                                    Título
+                                </label>
+
+                                <input type="text"
+                                       class="form-control"
+                                       id="titulo"
+                                       maxlength="200"
+                                       placeholder="Ej: The Witcher 3"
+                                       required>
+                            </div>
+
+                            <div class="col-md-4">
+                                <label for="clasificacionEdad" class="form-label">
+                                    Clasificación por edad
+                                </label>
+
+                                <select class="form-select"
+                                        id="clasificacionEdad"
+                                        required>
+                                    <option value="">Seleccionar...</option>
+                                    <option value="Libre">Libre</option>
+                                    <option value="3+">3+</option>
+                                    <option value="7+">7+</option>
+                                    <option value="12+">12+</option>
+                                    <option value="16+">16+</option>
+                                    <option value="18+">18+</option>
+                                </select>
+                            </div>
+
+                            <div class="col-12">
+                                <label for="descripcion" class="form-label">
+                                    Descripción
+                                </label>
+
+                                <textarea class="form-control"
+                                          id="descripcion"
+                                          rows="3"
+                                          placeholder="Descripción del producto..."></textarea>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label for="idTipoProducto" class="form-label">
+                                    Tipo de producto
+                                </label>
+
+                                <select class="form-select"
+                                        id="idTipoProducto"
+                                        required>
+                                    <option value="">Seleccionar tipo...</option>
+                                    <option value="1">Juego Base</option>
+                                    <option value="2">DLC</option>
+                                    <option value="3">Expansión</option>
+                                    <option value="4">Banda Sonora</option>
+                                </select>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label for="idEstadoPublicacion" class="form-label">
+                                    Estado de publicación
+                                </label>
+
+                                <select class="form-select"
+                                        id="idEstadoPublicacion"
+                                        required>
+                                    <option value="">Seleccionar estado...</option>
+                                    <option value="1">Publicado</option>
+                                    <option value="2">En Desarrollo</option>
+                                    <option value="3">Retirado</option>
+                                </select>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label for="fechaLanzamiento" class="form-label">
+                                    Fecha de lanzamiento
+                                </label>
+
+                                <input type="date"
+                                       class="form-control"
+                                       id="fechaLanzamiento"
+                                       required>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label for="idProductoPadre" class="form-label">
+                                    ID del producto padre
+                                </label>
+
+                                <input type="number"
+                                       class="form-control"
+                                       id="idProductoPadre"
+                                       min="1"
+                                       placeholder="Opcional">
+
+                                <small class="form-text">
+                                    Solo completar si es un DLC o una expansión asociada.
+                                </small>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="modal-footer">
+
+                        <button type="button"
+                                class="btn btn-outline-light"
+                                data-bs-dismiss="modal">
+                            Cancelar
+                        </button>
+
+                        <button type="submit"
+                                class="btn btn-primary"
+                                id="btnGuardarProducto">
+                            Guardar producto
+                        </button>
+
+                    </div>
+
+                </form>
+
+            </div>
+
         </div>
     </div>
-    </main>
-    <footer>
-    </footer>
-    <script src="productos.js"></script>
+
+
+    <!-- BOOTSTRAP -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+
 </body>
 </html>

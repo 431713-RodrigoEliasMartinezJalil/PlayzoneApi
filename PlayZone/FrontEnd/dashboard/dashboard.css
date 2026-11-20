@@ -1,5 +1,195 @@
+
 body {
     background: url("../assets/fondo.jpg") no-repeat center center / cover fixed;
     min-height: 100vh;
     margin: 0;
+    color: #f8f9fa;
+}
+
+main.container {
+    max-width: 1300px;
+}
+
+.dashboard-header {
+    margin-bottom: 2rem;
+}
+
+.aquaText {
+    color: #55d6e8;
+}
+
+.dashboard-header p {
+    color: rgba(255, 255, 255, 0.75);
+}
+
+.section-title {
+    color: #55d6e8;
+    font-size: 1.35rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+}
+
+.section-description {
+    color: #cbd5e1;
+    margin-bottom: 0;
+}
+
+.dashboard-card {
+    background: rgba(16, 24, 40, 0.93);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 16px;
+    color: #ffffff;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
+    height: 100%;
+    transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.dashboard-card:hover {
+    transform: translateY(-3px);
+    border-color: rgba(85, 214, 232, 0.5);
+}
+
+.dashboard-card .card-body {
+    padding: 1.4rem;
+}
+
+.dashboard-card .card-title {
+    color: #b8c4d6;
+    font-size: 0.95rem;
+    font-weight: 600;
+}
+
+.dashboard-number {
+    color: #55d6e8;
+    font-size: 2.2rem;
+    font-weight: 700;
+    margin: 0.8rem 0 0.25rem;
+}
+
+.dashboard-card span {
+    color: #cbd5e1;
+    font-size: 0.85rem;
+}
+
+/* Secciones de reportes */
+
+.dashboard-section {
+    padding-top: 1rem;
+}
+
+.section-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.year-selector {
+    min-width: 130px;
+}
+
+.year-selector label {
+    color: #ffffff;
+    font-size: 0.85rem;
+}
+
+.year-selector .form-select {
+    background-color: #101828;
+    color: #ffffff;
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+.year-selector .form-select:focus {
+    border-color: #55d6e8;
+    box-shadow: 0 0 0 0.2rem rgba(85, 214, 232, 0.2);
+}
+
+.chart-container {
+    position: relative;
+    width: 100%;
+    height: 300px;
+}
+
+.chart-large {
+    height: 380px;
+}
+
+.report-message {
+    color: #aebdce;
+    font-size: 0.9rem;
+    margin: 0.8rem 0 0;
+}
+
+/* Tablas */
+
+.report-table {
+    background: rgba(16, 24, 40, 0.93);
+    border-radius: 12px;
+    overflow: hidden;
+    margin-bottom: 0;
+}
+
+.report-table thead th {
+    color: #55d6e8;
+    white-space: nowrap;
+    font-size: 0.85rem;
+    border-bottom-color: rgba(255, 255, 255, 0.2);
+}
+
+.report-table tbody td {
+    color: #e2e8f0;
+    font-size: 0.9rem;
+    border-bottom-color: rgba(255, 255, 255, 0.08);
+}
+
+.report-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.ranking-number {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: rgba(85, 214, 232, 0.15);
+    color: #55d6e8;
+    font-weight: 700;
+}
+
+/* Responsive */
+
+@media (max-width: 767px) {
+    .section-heading {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .year-selector {
+        width: 100%;
+    }
+
+    .chart-container {
+        height: 260px;
+    }
+
+    .chart-large {
+        height: 300px;
+    }
+}
+
+@media (max-width: 575px) {
+    .dashboard-header h1 {
+        font-size: 1.8rem;
+    }
+
+    .dashboard-number {
+        font-size: 1.8rem;
+    }
+
+    .dashboard-card .card-body {
+        padding: 1.1rem;
+    }
 }

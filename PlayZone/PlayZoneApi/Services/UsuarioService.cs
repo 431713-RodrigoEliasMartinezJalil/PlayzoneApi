@@ -37,5 +37,49 @@ namespace PlayZoneApi.Services
 
             return usuario;
         }
+
+        public async Task<Usuario> RegistrarAsync(UserRegisterDTO registro)
+        {
+            var email = registro.Email.Trim();
+            var nombreUsuario = registro.Username.Trim();
+
+            if (await _repository.ObtenerPorEmailAsync(email) != null)
+            {
+                throw new InvalidOperationException("El email ya está registrado.");
+            }
+
+            if (await _repository.ExisteNombreUsuarioAsync(nombreUsuario))
+            {
+                throw new InvalidOperationException("El nombre de usuario ya está registrado.");
+            }
+
+            var pais = await _repository.ObtenerPaisPorIdAsync(registro.CountryId);
+            if (pais == null)
+            {
+                throw new ArgumentException("El país seleccionado no existe.");
+            }
+
+            var estado = await _repository.ObtenerEstadoPorNombreAsync("Activa");
+            if (estado == null)
+            {
+                throw new InvalidOperationException("No existe el estado de cuenta Activa.");
+            }
+
+            var usuario = new Usuario
+            {
+                nombre_usuario = nombreUsuario,
+                email = email,
+                nombre = registro.Name.Trim(),
+                apellido = registro.LastName.Trim(),
+                password_hash = BCrypt.Net.BCrypt.HashPassword(registro.Password),
+                fecha_nacimiento = registro.BirthDate,
+                id_pais = pais.id_pais,
+                id_estado_cuenta = estado.id_estado_cuenta,
+                fecha_registro = DateTime.UtcNow
+            };
+
+            await _repository.CrearAsync(usuario);
+            return usuario;
+        }
     }
 }

@@ -14,6 +14,7 @@
 
         public int TotalUsuarios { get; set; }
 
+        // REEMBOLSOS
         public int TotalReembolsos { get; set; }
 
         public List<VentasPorMonedaDTO> VentasPorMoneda { get; set; }

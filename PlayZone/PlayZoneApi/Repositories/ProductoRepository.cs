@@ -78,7 +78,14 @@ namespace PlayZoneApi.Repositories
         // ELIMINAR PRODUCTO
         public async Task EliminarAsync(Producto producto)
         {
-            producto.id_estado_publicacion = 3;
+
+            var estadoRetirado = await _context.Estados_Publicacions
+                .FirstOrDefaultAsync(e => e.nombre == "Retirado");
+
+            if (estadoRetirado is null)
+                throw new InvalidOperationException("No existe el estado 'Retirado'.");
+
+            producto.id_estado_publicacion = estadoRetirado.id_estado_publicacion;
             await _context.SaveChangesAsync();
         }
     }

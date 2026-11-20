@@ -27,7 +27,6 @@ namespace PlayZoneApi.Repositories.Interfaces
         Task<Ordenes_Compra?> ObtenerPorIdParaActualizarAsync(int id);
 
         Task ActualizarAsync(Ordenes_Compra orden);
-
-
+        Task<bool> CrearCompletoAsync(int id, Ordenes_Compra orden);
     }
 }

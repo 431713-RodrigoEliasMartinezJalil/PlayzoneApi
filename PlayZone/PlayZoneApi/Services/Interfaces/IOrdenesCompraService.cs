@@ -13,5 +13,7 @@ namespace PlayZoneApi.Services.Interfaces
         Task<OrdenCompraDTO> CrearAsync(OrdenCompraCrearDTO dto);
 
         Task<OrdenCompraDTO> ActualizarAsync(int id, OrdenCompraActualizarDTO dto);
+        Task<bool> EliminarAsync(int id);
+        Task<bool> CrearCompletoAsync(int id, OrdenCompraCrearDTO dto);
     }
 }

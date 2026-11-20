@@ -23,15 +23,16 @@
         <div class="container mt-4 mb-5">
             <form id="loginForm">
             <div class="mb-3">
-                <label for="inputUser" class="form-label aquaText">Usuario: </label>
-                <input type="user" class="form-control" id="inputUser">
+                <label for="inputUser" class="form-label aquaText">Email: </label>
+                <input type="email" class="form-control" id="inputUser" required>
             </div>
             <div class="mb-3">
                 <label for="inputPassword" class="form-label aquaText">Contraseña: </label>
                 <input type="password" class="form-control" id="inputPassword">
                 <div id="userHelp" class="form-text aquaText">Su contraseña permanecerá segura y encriptada en nuestra base de datos.</div>
             </div>
-            <button type="submit" class="btn btn-primary">Iniciar sesión</button>
+                <button type="submit" class="btn btn-primary">Iniciar sesión</button>
+                <a class="btn btn-secondary" href="../registro/registro.html">¿No tienes una cuenta? Regístrate</a>
             <p id="error"></p>
             </form>
         </div>
@@ -44,6 +45,5 @@
             </a>
         </div>
     </footer>
-    <script src="login.js"></script>
 </body>
 </html>

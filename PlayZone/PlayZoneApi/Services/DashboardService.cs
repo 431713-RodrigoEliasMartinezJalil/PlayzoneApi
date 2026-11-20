@@ -13,6 +13,7 @@ namespace PlayZoneApi.Services
             _repository = repository;
         }
 
+        // OBTENER RESUMEN GENERAL DEL DASHBOARD
         public async Task<DashboardResumenDTO> ObtenerResumenAsync()
         {
             return await _repository.ObtenerResumenAsync();
@@ -22,7 +23,6 @@ namespace PlayZoneApi.Services
         {
             return await _repository.ObtenerIngresosMensualesAsync(anio);
         }
-
 
         public async Task<List<VideojuegoMasVendidoDTO>> ObtenerVideojuegosMasVendidosAsync(int limite)
         {
@@ -36,3 +36,4 @@ namespace PlayZoneApi.Services
 
     }
 }
+

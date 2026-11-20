@@ -1,48 +1,335 @@
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PlayZone</title>
-    <link
-        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
-        rel="stylesheet"
-    >
+
+    <title>PlayZone | Órdenes de compra</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="ventas.css">
+
     <script src="ventas.js" defer></script>
 </head>
+
 <body>
-    <header>
-        <nav class="navbar navbar-expand-lg bg-dark border-bottom border-body" data-bs-theme="dark">
-            <div class="container-fluid">
-                <a class="navbar-brand" href="../inicio/inicio.html">PlayZone</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav">
-                        <li class="nav-item">
-                            <a class="nav-link" href="../inicio/inicio.html">Inicio</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="../productos/productos.html">Productos</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link active" href="#">Ventas</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="../dashboard/dashboard.html">Dashboard</a>
-                        </li>
-                    </ul>
-                </div>
+
+    <!-- NAVBAR -->
+    <nav class="navbar navbar-expand-lg navbar-dark navbar-playzone">
+        <div class="container-fluid px-4">
+
+            <a class="navbar-brand fw-bold" href="../inicio/inicio.html">
+                PLAY<span>ZONE</span>
+            </a>
+
+            <button class="navbar-toggler" type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#navbarMenu"
+                    aria-controls="navbarMenu"
+                    aria-expanded="false"
+                    aria-label="Abrir menú">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarMenu">
+
+                <ul class="navbar-nav ms-4 me-auto">
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="../inicio/inicio.html">Inicio</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="../productos/productos.html">Productos</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link active" href="ventas.html">Órdenes de compra</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="../reembolsos/reembolsos.html">Reembolsos</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="../dashboard/dashboard.html">Dashboard</a>
+                    </li>
+
+                </ul>
+
+                <span class="navbar-text">
+                    Panel administrativo
+                </span>
+
             </div>
-        </nav>
-    </header>
-    <main>
+        </div>
+    </nav>
+
+
+    <!-- CONTENIDO -->
+    <main class="container-fluid px-4 py-4">
+
+        <!-- ENCABEZADO -->
+        <section class="page-header mb-4">
+
+            <div>
+                <span class="section-label">ADMINISTRACIÓN</span>
+                <h1>Órdenes de compra</h1>
+                <p>Consultá las transacciones y los detalles de cada compra.</p>
+            </div>
+
+            <button class="btn btn-outline-light" id="btnActualizar">
+                ↻ Actualizar listado
+            </button>
+
+        </section>
+
+
+        <!-- FILTROS -->
+        <section class="filter-card mb-4">
+
+            <div class="row g-3 align-items-end">
+
+                <div class="col-lg-5 col-md-6">
+
+                    <label for="buscarOrden" class="form-label">
+                        Buscar orden
+                    </label>
+
+                    <input type="text"
+                           class="form-control"
+                           id="buscarOrden"
+                           placeholder="ID, usuario o email...">
+
+                </div>
+
+
+                <div class="col-lg-3 col-md-6">
+
+                    <label for="filtroEstado" class="form-label">
+                        Estado
+                    </label>
+
+                    <select class="form-select" id="filtroEstado">
+                        <option value="">Todos los estados</option>
+                    </select>
+
+                </div>
+
+
+                <div class="col-lg-2 col-md-6">
+
+                    <label for="fechaDesde" class="form-label">
+                        Desde
+                    </label>
+
+                    <input type="date"
+                           class="form-control"
+                           id="fechaDesde">
+
+                </div>
+
+
+                <div class="col-lg-2 col-md-6">
+
+                    <label for="fechaHasta" class="form-label">
+                        Hasta
+                    </label>
+
+                    <input type="date"
+                           class="form-control"
+                           id="fechaHasta">
+
+                </div>
+
+
+                <div class="col-12 text-end">
+
+                    <button class="btn btn-outline-light"
+                            type="button"
+                            id="btnLimpiarFiltros">
+                        Limpiar filtros
+                    </button>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- TABLA -->
+        <section class="orders-card">
+
+            <div class="orders-card-header">
+
+                <div>
+                    <h2>Historial de compras</h2>
+                    <p>Órdenes registradas en PlayZone.</p>
+                </div>
+
+                <span class="orders-counter" id="contadorOrdenes">
+                    0 órdenes
+                </span>
+
+            </div>
+
+
+            <div class="table-responsive">
+
+                <table class="table orders-table align-middle mb-0">
+
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Usuario</th>
+                            <th>Fecha</th>
+                            <th>Método de pago</th>
+                            <th>Moneda</th>
+                            <th>Estado</th>
+                            <th>Productos</th>
+                            <th class="text-end">Detalle</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="tabla">
+
+                        <tr>
+                            <td colspan="8" class="text-center py-5">
+                                Cargando órdenes...
+                            </td>
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </section>
 
     </main>
-    <footer>
 
-    </footer>
+
+    <!-- MODAL DETALLE DE ORDEN -->
+    <div class="modal fade" id="modalOrden" tabindex="-1"
+         aria-labelledby="tituloModalOrden" aria-hidden="true">
+
+        <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+
+            <div class="modal-content modal-playzone">
+
+                <div class="modal-header">
+
+                    <div>
+                        <span class="section-label">INFORMACIÓN DE COMPRA</span>
+                        <h5 class="modal-title" id="tituloModalOrden">
+                            Detalle de la orden
+                        </h5>
+                    </div>
+
+                    <button type="button"
+                            class="btn-close btn-close-white"
+                            data-bs-dismiss="modal"
+                            aria-label="Cerrar">
+                    </button>
+
+                </div>
+
+
+                <div class="modal-body">
+
+                    <!-- INFORMACIÓN GENERAL -->
+                    <div class="order-info-grid mb-4">
+
+                        <div class="order-info-item">
+                            <span>Orden</span>
+                            <strong id="detalleIdOrden">-</strong>
+                        </div>
+
+                        <div class="order-info-item">
+                            <span>Usuario</span>
+                            <strong id="detalleUsuario">-</strong>
+                        </div>
+
+                        <div class="order-info-item">
+                            <span>Fecha</span>
+                            <strong id="detalleFecha">-</strong>
+                        </div>
+
+                        <div class="order-info-item">
+                            <span>Método de pago</span>
+                            <strong id="detallePago">-</strong>
+                        </div>
+
+                        <div class="order-info-item">
+                            <span>Moneda</span>
+                            <strong id="detalleMoneda">-</strong>
+                        </div>
+
+                        <div class="order-info-item">
+                            <span>Estado</span>
+                            <strong id="detalleEstado">-</strong>
+                        </div>
+
+                    </div>
+
+
+                    <!-- PRODUCTOS -->
+                    <h6 class="detail-section-title">
+                        Productos de la compra
+                    </h6>
+
+                    <div class="table-responsive">
+
+                        <table class="table detail-table align-middle">
+
+                            <thead>
+                                <tr>
+                                    <th>Producto</th>
+                                    <th>Precio</th>
+                                    <th>Descuento</th>
+                                    <th>Regalo</th>
+                                </tr>
+                            </thead>
+
+                            <tbody id="tablaDetalles">
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+
+                    <!-- TOTAL -->
+                    <div class="order-total">
+                        <span>Total de la orden</span>
+                        <strong id="detalleTotal">-</strong>
+                    </div>
+
+                </div>
+
+
+                <div class="modal-footer">
+
+                    <button type="button"
+                            class="btn btn-outline-light"
+                            data-bs-dismiss="modal">
+                        Cerrar
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- BOOTSTRAP -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+
 </body>
 </html>

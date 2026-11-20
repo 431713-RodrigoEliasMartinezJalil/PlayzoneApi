@@ -234,10 +234,5 @@ namespace PlayZoneApi.Repositories
 
             return clientes;
         }
-
-
-
-
-
     }
 }

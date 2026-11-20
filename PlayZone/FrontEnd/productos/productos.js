@@ -1,105 +1,520 @@
+
 const API = "https://localhost:7239/api/Producto";
 
-const TOKEN = localStorage.getItem('token');
+const TOKEN = localStorage.getItem("token");
 
 const HEADERS = {
     "Content-Type": "application/json",
-    "Authorization": "Bearer " + TOKEN,
+    "Authorization": "Bearer " + TOKEN
 };
+
+// =========================================
+// ELEMENTOS DEL DOM
+// =========================================
 
 const tabla = document.getElementById("tabla");
 const formulario = document.getElementById("formulario");
 
-async function cargarProductos() {
-    const respuesta = await fetch(API, { headers: HEADERS });
-    const productos = await respuesta.json();
+const modalElemento = document.getElementById("modalProducto");
+const modalProducto = bootstrap.Modal.getOrCreateInstance(modalElemento);
 
-    tabla.innerHTML = "";
-    for (const p of productos) {
-        tabla.innerHTML += `
-        <tr>
-            <td>${p.idProducto}</td>
-            <td>${p.titulo}</td>
-            <td>${p.descripcion}</td>
-            <td>${p.tipoProducto}</td>
-            <td>${p.estadoPublicacion}</td>
-            <td>${p.clasificacionEdad}</td>
-            <td>${p.fechaLanzamiento}</td>
-            <td>${p.idProductoPadre ?? ""}</td>
-            <td>
-            <button class="btn btn-sm btn-warning" onclick='editar(${JSON.stringify(p)})'>Editar</button>
-            <button class="btn btn-sm btn-danger" onclick="eliminar(${p.idProducto})">Eliminar</button>
-            </td>
-        </tr>`;
+const contadorProductos = document.getElementById("contadorProductos");
+
+const buscarTitulo = document.getElementById("buscarTitulo");
+const filtroTipo = document.getElementById("filtroTipo");
+const filtroEstado = document.getElementById("filtroEstado");
+const filtroClasificacion = document.getElementById("filtroClasificacion");
+
+let productos = [];
+
+
+// =========================================
+// UTILIDADES
+// =========================================
+
+function escaparHTML(valor) {
+    return String(valor ?? "").replace(/[&<>"']/g, caracter => ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#039;"
+    })[caracter]);
+}
+
+
+function obtenerFecha(fecha) {
+    if (!fecha) return "";
+
+    // Evitamos problemas de zona horaria con fechas YYYY-MM-DD.
+    return String(fecha).substring(0, 10);
+}
+
+
+function formatearFecha(fecha) {
+    const fechaSimple = obtenerFecha(fecha);
+
+    if (!fechaSimple) return "-";
+
+    const partes = fechaSimple.split("-");
+
+    if (partes.length !== 3) return fechaSimple;
+
+    return `${partes[2]}/${partes[1]}/${partes[0]}`;
+}
+
+
+async function obtenerMensajeError(respuesta) {
+    const texto = await respuesta.text();
+
+    if (!texto) return `Error ${respuesta.status}`;
+
+    try {
+        const error = JSON.parse(texto);
+
+        if (error.errors) {
+            return Object.values(error.errors).flat().join("\n");
+        }
+
+        return error.mensaje || error.title || error.error || texto;
+
+    } catch {
+        return texto;
     }
 }
 
+
+// =========================================
+// CARGAR PRODUCTOS
+// =========================================
+
+async function cargarProductos() {
+
+    try {
+
+        tabla.innerHTML = `
+            <tr>
+                <td colspan="8" class="text-center py-5">
+                    Cargando productos...
+                </td>
+            </tr>
+        `;
+
+        const parametros = new URLSearchParams();
+
+        const titulo = buscarTitulo.value.trim();
+
+        if (titulo) {
+            parametros.append("titulo", titulo);
+        }
+
+        if (filtroTipo.value) {
+            parametros.append("idTipoProducto", filtroTipo.value);
+        }
+
+        if (filtroEstado.value) {
+            parametros.append("idEstadoPublicacion", filtroEstado.value);
+        }
+
+        if (filtroClasificacion.value) {
+            parametros.append("clasificacionEdad", filtroClasificacion.value);
+        }
+
+        const url = parametros.toString()
+            ? `${API}?${parametros.toString()}`
+            : API;
+
+        const respuesta = await fetch(url, {
+            method: "GET",
+            headers: HEADERS
+        });
+
+        if (!respuesta.ok) {
+            throw new Error(await obtenerMensajeError(respuesta));
+        }
+
+        productos = await respuesta.json();
+
+        renderizarProductos();
+
+    } catch (error) {
+
+        console.error("Error al cargar productos:", error);
+
+        tabla.innerHTML = `
+            <tr>
+                <td colspan="8" class="text-center text-danger py-5">
+                    No se pudieron cargar los productos.
+                    <br>
+                    <small>${escaparHTML(error.message)}</small>
+                </td>
+            </tr>
+        `;
+
+        contadorProductos.textContent = "Error";
+
+    }
+}
+
+
+// =========================================
+// MOSTRAR PRODUCTOS EN LA TABLA
+// =========================================
+
+function renderizarProductos() {
+
+    tabla.innerHTML = "";
+
+    contadorProductos.textContent =
+        `${productos.length} ${productos.length === 1 ? "producto" : "productos"}`;
+
+    if (productos.length === 0) {
+
+        tabla.innerHTML = `
+            <tr>
+                <td colspan="8" class="text-center py-5">
+                    No se encontraron productos.
+                </td>
+            </tr>
+        `;
+
+        return;
+    }
+
+    for (const p of productos) {
+
+        let claseEstado = "status-published";
+
+        if (p.idEstadoPublicacion === 2) {
+            claseEstado = "status-development";
+        }
+
+        if (p.idEstadoPublicacion === 3) {
+            claseEstado = "status-retired";
+        }
+
+        const fila = document.createElement("tr");
+
+        fila.innerHTML = `
+            <td>${p.idProducto}</td>
+
+            <td>
+                <strong>${escaparHTML(p.titulo)}</strong>
+                <div class="small text-secondary">
+                    ${escaparHTML(p.descripcion || "")}
+                </div>
+            </td>
+
+            <td>${escaparHTML(p.tipoProducto)}</td>
+
+            <td>
+                <span class="status-badge ${claseEstado}">
+                    ${escaparHTML(p.estadoPublicacion)}
+                </span>
+            </td>
+
+            <td>${escaparHTML(p.clasificacionEdad)}</td>
+
+            <td>${formatearFecha(p.fechaLanzamiento)}</td>
+
+            <td>${p.idProductoPadre ?? "-"}</td>
+
+            <td class="text-end">
+                <button
+                    class="btn btn-sm btn-edit-product me-1"
+                    data-accion="editar"
+                    data-id="${p.idProducto}">
+                    Editar
+                </button>
+
+                <button
+                    class="btn btn-sm btn-delete-product"
+                    data-accion="retirar"
+                    data-id="${p.idProducto}">
+                    Retirar
+                </button>
+            </td>
+        `;
+
+        tabla.appendChild(fila);
+    }
+}
+
+
+// =========================================
+// CREAR / ACTUALIZAR PRODUCTO
+// =========================================
+
 formulario.addEventListener("submit", async (e) => {
+
     e.preventDefault();
 
     const id = document.getElementById("idProducto").value;
 
     const producto = {
-        titulo: document.getElementById("titulo").value,
-        descripcion: document.getElementById("descripcion").value,
-        idTipoProducto: Number(document.getElementById("idTipoProducto").value),
-        idEstadoPublicacion: Number(document.getElementById("idEstadoPublicacion").value),
-        clasificacionEdad: document.getElementById("clasificacionEdad").value,
-        fechaLanzamiento: document.getElementById("fechaLanzamiento").value,
-        idProductoPadre: document.getElementById("idProductoPadre").value ? Number(document.getElementById("idProductoPadre").value) : null,
+
+        titulo: document.getElementById("titulo").value.trim(),
+
+        descripcion: document.getElementById("descripcion").value.trim(),
+
+        idTipoProducto: Number(
+            document.getElementById("idTipoProducto").value
+        ),
+
+        idEstadoPublicacion: Number(
+            document.getElementById("idEstadoPublicacion").value
+        ),
+
+        clasificacionEdad:
+            document.getElementById("clasificacionEdad").value,
+
+        fechaLanzamiento:
+            document.getElementById("fechaLanzamiento").value,
+
+        idProductoPadre:
+            document.getElementById("idProductoPadre").value
+                ? Number(document.getElementById("idProductoPadre").value)
+                : null
     };
 
-    let respuesta;
+    const esEdicion = Boolean(id);
 
-    if (id) {
-        // Si hay id, es una edición (PUT)
-        respuesta = await fetch(`${API}/${id}`, {
-        method: "PUT",
-        headers: HEADERS,
-        body: JSON.stringify(producto),
+    const url = esEdicion ? `${API}/${id}` : API;
+
+    const metodo = esEdicion ? "PUT" : "POST";
+
+    const botonGuardar = document.getElementById("btnGuardarProducto");
+
+    try {
+
+        botonGuardar.disabled = true;
+        botonGuardar.textContent = "Guardando...";
+
+        const respuesta = await fetch(url, {
+            method: metodo,
+            headers: HEADERS,
+            body: JSON.stringify(producto)
         });
-    } else {
-        // Si no hay id, es un producto nuevo (POST)
-        respuesta = await fetch(API, {
-        method: "POST",
-        headers: HEADERS,
-        body: JSON.stringify(producto),
-        });
+
+        if (!respuesta.ok) {
+            throw new Error(await obtenerMensajeError(respuesta));
+        }
+
+        alert(
+            esEdicion
+                ? "Producto actualizado correctamente."
+                : "Producto creado correctamente."
+        );
+
+        limpiarFormulario();
+
+        modalProducto.hide();
+
+        await cargarProductos();
+
+    } catch (error) {
+
+        console.error("Error al guardar producto:", error);
+
+        alert(error.message);
+
+    } finally {
+
+        botonGuardar.disabled = false;
+        botonGuardar.textContent = "Guardar producto";
+
     }
 
-    if (!respuesta.ok) {
-        const error = await respuesta.json().catch(() => null);
-        alert(error?.errors ? Object.values(error.errors).flat().join("\n") : "Error " + respuesta.status);
-        return;
-    }
-
-    limpiarFormulario();
-    cargarProductos();
 });
 
-function editar(p) {
+
+// =========================================
+// EDITAR PRODUCTO
+// =========================================
+
+function editarProducto(id) {
+
+    const p = productos.find(x => x.idProducto === id);
+
+    if (!p) return;
+
     document.getElementById("idProducto").value = p.idProducto;
+
     document.getElementById("titulo").value = p.titulo;
-    document.getElementById("descripcion").value = p.descripcion;
+
+    document.getElementById("descripcion").value = p.descripcion || "";
+
     document.getElementById("idTipoProducto").value = p.idTipoProducto;
-    document.getElementById("idEstadoPublicacion").value = p.idEstadoPublicacion;
-    document.getElementById("clasificacionEdad").value = p.clasificacionEdad;
-    document.getElementById("fechaLanzamiento").value = p.fechaLanzamiento;
-    document.getElementById("idProductoPadre").value = p.idProductoPadre ?? "";
+
+    document.getElementById("idEstadoPublicacion").value =
+        p.idEstadoPublicacion;
+
+    document.getElementById("clasificacionEdad").value =
+        p.clasificacionEdad;
+
+    document.getElementById("fechaLanzamiento").value =
+        obtenerFecha(p.fechaLanzamiento);
+
+    document.getElementById("idProductoPadre").value =
+        p.idProductoPadre ?? "";
+
+    document.getElementById("tituloModalProducto").textContent =
+        "Editar producto";
+
+    document.getElementById("btnGuardarProducto").textContent =
+        "Guardar cambios";
+
+    modalProducto.show();
 }
 
-async function eliminar(id) {
-    console.log(id);
-    
-    if (!confirm("¿Eliminar este producto?")) return;
-    await fetch(`${API}/${id}`, { method: "DELETE", headers: HEADERS });
-    cargarProductos();
+
+// =========================================
+// RETIRAR PRODUCTO
+// =========================================
+
+async function retirarProducto(id) {
+
+    const confirmado = confirm(
+        "¿Estás seguro de que querés retirar este producto del catálogo?"
+    );
+
+    if (!confirmado) return;
+
+    try {
+
+        const respuesta = await fetch(`${API}/${id}`, {
+            method: "DELETE",
+            headers: HEADERS
+        });
+
+        if (!respuesta.ok) {
+            throw new Error(await obtenerMensajeError(respuesta));
+        }
+
+        alert("Producto retirado correctamente.");
+
+        await cargarProductos();
+
+    } catch (error) {
+
+        console.error("Error al retirar producto:", error);
+
+        alert(error.message);
+
+    }
 }
+
+
+// =========================================
+// EVENTOS DE LA TABLA
+// =========================================
+
+tabla.addEventListener("click", (e) => {
+
+    const boton = e.target.closest("button[data-accion]");
+
+    if (!boton) return;
+
+    const id = Number(boton.dataset.id);
+
+    if (boton.dataset.accion === "editar") {
+        editarProducto(id);
+    }
+
+    if (boton.dataset.accion === "retirar") {
+        retirarProducto(id);
+    }
+
+});
+
+
+// =========================================
+// NUEVO PRODUCTO
+// =========================================
+
+document.getElementById("btnNuevoProducto").addEventListener("click", () => {
+
+    limpiarFormulario();
+
+    document.getElementById("tituloModalProducto").textContent =
+        "Nuevo producto";
+
+    document.getElementById("btnGuardarProducto").textContent =
+        "Guardar producto";
+
+});
+
+
+// =========================================
+// LIMPIAR FORMULARIO
+// =========================================
 
 function limpiarFormulario() {
-    formulario.reset();
-    document.getElementById("idProducto").value = "";
-}
-document.getElementById("btnCancelar").addEventListener("click", limpiarFormulario);
 
-cargarProductos();
+    formulario.reset();
+
+    document.getElementById("idProducto").value = "";
+
+}
+
+
+// =========================================
+// FILTROS
+// =========================================
+
+let temporizadorBusqueda;
+
+buscarTitulo.addEventListener("input", () => {
+
+    clearTimeout(temporizadorBusqueda);
+
+    temporizadorBusqueda = setTimeout(() => {
+        cargarProductos();
+    }, 350);
+
+});
+
+
+filtroTipo.addEventListener("change", cargarProductos);
+
+filtroEstado.addEventListener("change", cargarProductos);
+
+filtroClasificacion.addEventListener("change", cargarProductos);
+
+
+document.getElementById("btnLimpiarFiltros").addEventListener("click", () => {
+
+    buscarTitulo.value = "";
+
+    filtroTipo.value = "";
+
+    filtroEstado.value = "";
+
+    filtroClasificacion.value = "";
+
+    cargarProductos();
+
+});
+
+
+// =========================================
+// INICIALIZACIÓN
+// =========================================
+
+if (!TOKEN) {
+
+    alert("No se encontró una sesión activa. Iniciá sesión nuevamente.");
+
+} else {
+
+    // El backend excluye siempre los productos retirados.
+    const opcionRetirados = filtroEstado.querySelector('option[value="3"]');
+
+    if (opcionRetirados) {
+        opcionRetirados.disabled = true;
+        opcionRetirados.textContent = "Retirado (no disponible en listado)";
+    }
+
+    cargarProductos();
+
+}

@@ -1,0 +1,237 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PlayZone | Reembolsos</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="reembolsos.css">
+
+    <script src="reembolsos.js" defer></script>
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-dark navbar-custom">
+        <div class="container-fluid px-4">
+            <a class="navbar-brand fw-bold" href="../inicio/inicio.html">
+                <i class="bi bi-controller me-2"></i>PlayZone
+            </a>
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarMenu">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarMenu">
+                <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-3">
+                    <li class="nav-item">
+                        <a class="nav-link" href="../inicio/inicio.html">Inicio</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="../productos/productos.html">Productos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="../ventas/ventas.html">Órdenes de compra</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="reembolsos.html">Reembolsos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="../dashboard/dashboard.html">Dashboard</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container-fluid px-4 py-4">
+
+        <div class="page-header mb-4">
+            <div>
+                <span class="section-label">GESTIÓN COMERCIAL</span>
+                <h1>Reembolsos</h1>
+                <p>Administrá y supervisá las solicitudes de devolución de los usuarios.</p>
+            </div>
+
+            <button class="btn btn-outline-light" id="btnActualizar">
+                <i class="bi bi-arrow-clockwise me-2"></i>Actualizar
+            </button>
+        </div>
+
+        <!-- ESTADÍSTICAS -->
+        <section class="row g-3 mb-4">
+
+            <div class="col-6 col-xl-3">
+                <div class="stat-card">
+                    <div class="stat-icon purple">
+                        <i class="bi bi-arrow-left-right"></i>
+                    </div>
+                    <div>
+                        <span>Total solicitudes</span>
+                        <h3 id="totalReembolsos">0</h3>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-6 col-xl-3">
+                <div class="stat-card">
+                    <div class="stat-icon orange">
+                        <i class="bi bi-hourglass-split"></i>
+                    </div>
+                    <div>
+                        <span>Pendientes</span>
+                        <h3 id="totalPendientes">0</h3>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-6 col-xl-3">
+                <div class="stat-card">
+                    <div class="stat-icon green">
+                        <i class="bi bi-check-circle"></i>
+                    </div>
+                    <div>
+                        <span>Aprobados</span>
+                        <h3 id="totalAprobados">0</h3>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-6 col-xl-3">
+                <div class="stat-card">
+                    <div class="stat-icon red">
+                        <i class="bi bi-x-circle"></i>
+                    </div>
+                    <div>
+                        <span>Rechazados</span>
+                        <h3 id="totalRechazados">0</h3>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- LISTADO -->
+        <section class="content-card">
+
+            <div class="content-header">
+                <div>
+                    <h5>Solicitudes registradas</h5>
+                    <span id="contadorReembolsos">0 solicitudes encontradas</span>
+                </div>
+            </div>
+
+            <div class="filters-container">
+                <div class="search-box">
+                    <i class="bi bi-search"></i>
+                    <input type="text" id="buscarReembolso"
+                           placeholder="Buscar por ID o producto...">
+                </div>
+
+                <select id="filtroEstado" class="form-select">
+                    <option value="">Todos los estados</option>
+                    <option value="Solicitado">Solicitado</option>
+                    <option value="Pendiente">Pendiente</option>
+                    <option value="Aprobado">Aprobado</option>
+                    <option value="Rechazado">Rechazado</option>
+                </select>
+
+                <button class="btn btn-outline-light" id="btnLimpiarFiltros">
+                    <i class="bi bi-eraser me-1"></i>Limpiar
+                </button>
+            </div>
+
+            <div class="table-responsive">
+                <table class="table table-custom align-middle">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>PRODUCTO</th>
+                            <th>DETALLE ORDEN</th>
+                            <th>FECHA</th>
+                            <th>IMPORTE</th>
+                            <th>ESTADO</th>
+                            <th class="text-center">ACCIÓN</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tablaReembolsos">
+                        <tr>
+                            <td colspan="7" class="text-center py-4">
+                                Cargando solicitudes...
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </section>
+    </main>
+
+    <!-- MODAL DETALLE -->
+    <div class="modal fade" id="modalReembolso" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content modal-custom">
+
+                <div class="modal-header">
+                    <div>
+                        <span class="section-label">INFORMACIÓN</span>
+                        <h5 class="modal-title">Detalle del reembolso</h5>
+                    </div>
+                    <button type="button" class="btn-close btn-close-white"
+                            data-bs-dismiss="modal"></button>
+                </div>
+
+                <div class="modal-body">
+
+                    <div class="detail-item">
+                        <span>Número de solicitud</span>
+                        <strong id="detalleId">-</strong>
+                    </div>
+
+                    <div class="detail-item">
+                        <span>Producto</span>
+                        <strong id="detalleProducto">-</strong>
+                    </div>
+
+                    <div class="detail-item">
+                        <span>Detalle de orden</span>
+                        <strong id="detalleOrden">-</strong>
+                    </div>
+
+                    <div class="detail-item">
+                        <span>Fecha de solicitud</span>
+                        <strong id="detalleFecha">-</strong>
+                    </div>
+
+                    <div class="detail-item">
+                        <span>Importe a reembolsar</span>
+                        <strong id="detalleMonto" class="text-success">-</strong>
+                    </div>
+
+                    <div class="detail-item">
+                        <span>Estado actual</span>
+                        <strong id="detalleEstado">-</strong>
+                    </div>
+
+                    <div class="motivo-container mt-3">
+                        <span>Motivo de la solicitud</span>
+                        <p id="detalleMotivo">-</p>
+                    </div>
+
+                </div>
+
+                <div class="modal-footer" id="accionesReembolso">
+                    <button type="button" class="btn btn-secondary"
+                            data-bs-dismiss="modal">Cerrar</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
