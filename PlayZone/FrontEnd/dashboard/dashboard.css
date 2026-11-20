@@ -162,7 +162,7 @@ main.container {
 }
 
 .aquaText {
-    color: #55d6e8;
+    color: #7652ff;
 }
 
 .dashboard-header p {
@@ -170,7 +170,7 @@ main.container {
 }
 
 .section-title {
-    color: #55d6e8;
+    color: #7652ff;
     font-size: 1.35rem;
     font-weight: 700;
     margin-bottom: 1rem;
@@ -207,7 +207,7 @@ main.container {
 }
 
 .dashboard-number {
-    color: #55d6e8;
+    color: #7652ff;
     font-size: 2.2rem;
     font-weight: 700;
     margin: 0.8rem 0 0.25rem;
@@ -302,7 +302,7 @@ main.container {
     height: 30px;
     border-radius: 50%;
     background: rgba(85, 214, 232, 0.15);
-    color: #55d6e8;
+    color: #7652ff;
     font-weight: 700;
 }
 

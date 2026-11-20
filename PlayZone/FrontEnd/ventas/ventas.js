@@ -217,6 +217,8 @@ function renderizarOrdenes(lista) {
                 <button class="btn-detail" data-orden-id="${Number(o.idOrden)}">
                     Ver detalle
                 </button>
+            <button class="btn btn-sm btn-outline-secondary" onclick="editar(${o.idOrden})">Editar</button>
+            <button class="btn btn-sm btn-outline-danger" onclick="eliminar(${o.idOrden})">Cancelar</button>
             </td>
         `;
 
@@ -643,4 +645,151 @@ document.querySelectorAll(".nav-link").forEach(link => {
     });
 
 });
+
+const modalCrearOrdenElemento = document.getElementById("modalCrearOrden");
+const modalCrearOrden = new bootstrap.Modal(modalCrearOrdenElemento);
+const formulario = document.getElementById("formulario");
+const contenedorDetalles = document.getElementById("detalles");
+const btnGenerarOrden = document.getElementById("btnGenerarOrden");
+
+btnGenerarOrden.addEventListener("click", () => {
+
+        modalCrearOrden.show();
+
+    });
+
+
+function agregarDetalle(d = {}) {
+    const fila = document.createElement("div");
+    fila.className = "row g-2 mb-2 fila-detalle";
+    fila.innerHTML = `
+        <div class="col-md-4">
+        <label class="form-label aquaText">Producto</label>
+            <select id="idProducto" class="form-select" required>
+                <option value="1">The Witcher 3: Wild Hunt</option>
+                <option value="2">Cyberpunk 2077</option>
+                <option value="3">Red Dead Redemption 2</option>
+                <option value="4">Grand Theft Auto V</option>
+                <option value="5">Elden Ring</option>
+                <option value="6">Dark Souls III</option>
+                <option value="7">Baldurs Gate 3</option>
+                <option value="8">Divinity: Original Sin 2</option>
+                <option value="9">The Elder Scrolls V: Skyrim</option>
+                <option value="10">Fallout 4</option>
+            </select>
+        </div>
+        <div class="col-md-4">
+        <label class="form-label aquaText">Monto descuento</label>
+        <input type="number" class="form-control montoDescuento" placeholder="Descuento" min="0" step="0.01" value="${d.montoDescuento ?? 0}">
+        </div>
+        <div class="col-md-2 d-flex align-items-center">
+        <div class="form-check">
+            <input type="checkbox" class="form-check-input esRegalo" ${d.esRegalo ? "checked" : ""}>
+            <label class="form-check-label aquaText">Regalo</label>
+        </div>
+        </div>
+        <div class="col-md-2">
+        <button type="button" class="btn btn-outline-danger w-100 btnQuitar">Quitar</button>
+        </div>`;
+    fila.querySelector(".btnQuitar").addEventListener("click", () => fila.remove());
+    contenedorDetalles.appendChild(fila);
+}
+
+document.getElementById("btnAgregar").addEventListener("click", () => agregarDetalle());
+
+formulario.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const id = document.getElementById("idOrden").value;
+    
+
+    // Leemos todas las filas de productos del formulario
+    const detalles = [];
+    for (const fila of document.querySelectorAll(".fila-detalle")) {
+        detalles.push({
+        idProducto: Number(fila.querySelector("#idProducto").value),
+        montoDescuento: Number(fila.querySelector(".montoDescuento").value),
+        esRegalo: fila.querySelector(".esRegalo").checked,
+        });
+    }
+
+    if (detalles.length === 0) {
+        alert("Agregá al menos un producto a la orden.");
+        return;
+    }
+
+    const orden = {
+        idUsuario: Number(document.getElementById("idUsuario").value),
+        idMetodoPago: Number(document.getElementById("idMetodoPago").value),
+        idMoneda: Number(document.getElementById("idMoneda").value),
+        detalles: detalles,
+    };
+
+    let respuesta;
+
+    if (id) {
+        // Si hay id, es una edición (PUT)
+        respuesta = await fetch(`${API}/${id}`, {
+        method: "PUT",
+        headers: HEADERS,
+        body: JSON.stringify(orden),
+        });
+    } else {
+        // Si no hay id, es una orden nueva (POST)
+        respuesta = await fetch(API, {
+        method: "POST",
+        headers: HEADERS,
+        body: JSON.stringify(orden),
+        });
+    }
+
+    // Si la API rechaza los datos, mostrar los mensajes de error
+    if (!respuesta.ok) {
+        const error = await respuesta.json().catch(() => null);
+        alert(error?.errors ? Object.values(error.errors).flat().join("\n") : "Error " + respuesta.status);
+        return;
+    }
+
+    limpiarFormulario();
+    modalCrearOrden.hide();
+    cargarOrdenes();
+});
+
+
+// ---------- EDITAR: pasa los datos de la orden al formulario ----------
+function editar(id) {
+    modalCrearOrden.show();
+    const o = ordenes.find((x) => x.idOrden === id);
+
+    limpiarFormulario();
+    document.getElementById("idOrden").value = o.idOrden;
+    document.getElementById("idUsuario").value = o.idUsuario;
+    // La API no devuelve idMetodoPago ni idMoneda, hay que volver a escribirlos
+
+    for (const d of o.detalles) {
+        agregarDetalle(d);
+    }
+    window.scrollTo(0, 0);
+}
+
+async function eliminar(id) {
+    if (!confirm("¿Eliminar esta orden?")) return;
+    await fetch(`${API}/${id}`, { method: "DELETE", headers: HEADERS });
+    cargarOrdenes();
+}
+
+function limpiarFormulario() {
+    formulario.reset();
+    document.getElementById("idOrden").value = "";
+    contenedorDetalles.innerHTML = "";
+}
+
+btnGenerarOrden.addEventListener("click", () => {
+        limpiarFormulario();
+        modalCrearOrden.show();
+
+    });
+
+
+document.getElementById("btnCancelar").addEventListener("click", limpiarFormulario);
 

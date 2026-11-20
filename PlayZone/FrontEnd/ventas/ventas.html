@@ -111,9 +111,16 @@
                 <p>Consultá las transacciones y los detalles de cada compra.</p>
             </div>
 
+            <div id="padreBotones">
+            <button class="btn btn-outline-light" id="btnGenerarOrden">
+                Generar orden
+            </button>
             <button class="btn btn-outline-light" id="btnActualizar">
                 ↻ Actualizar listado
             </button>
+            </div>
+
+            
 
         </section>
 
@@ -389,8 +396,19 @@
                 <input type="hidden" id="idOrden">
     
                 <div class="col-md-4">
-                    <label class="form-label aquaText">ID usuario</label>
-                    <input type="number" id="idUsuario" class="form-control" min="1" required>
+                    <label class="form-label aquaText">Usuario</label>
+                    <select id="idUsuario" class="form-select" required>
+                        <option value="1">GamerPro_99</option>
+                        <option value="2">PixelQueen</option>
+                        <option value="3">RetroHunter</option>
+                        <option value="4">ShadowKnight</option>
+                        <option value="5">NordicWarrior</option>
+                        <option value="6">IndieExplorer</option>
+                        <option value="7">LunaGamer</option>
+                        <option value="8">SpeedRunnerAR</option>
+                        <option value="9">OldSchoolGuy</option>
+                        <option value="10">CasualMia</option>
+                    </select>
                 </div>
                 <div class="col-md-4">
                     <label class="form-label aquaText">Método de pago</label>
@@ -413,12 +431,12 @@
                 <div class="col-12">
                     <label class="form-label aquaText">Productos</label>
                     <div id="detalles"></div>
-                    <button type="button" id="btnAgregar" class="btn btn-sm btn-outline-primary">+ Agregar producto</button>
+                    <button type="button" id="btnAgregar" class="btn btn-sm btn-outline-secondary">+ Agregar producto</button>
                 </div>
             
                 <div class="col-12">
-                    <button type="submit" class="btn btn-primary">Crear/Editar</button>
-                    <button type="button" id="btnCancelar" class="btn btn-secondary">Limpiar</button>
+                    <button type="submit" class="btn btn-outline-secondary">Crear/Editar</button>
+                    <button type="button" id="btnCancelar" class="btn btn-outline-secondary">Limpiar</button>
                     <p class="aquaText">(seleccione editar en una orden de abajo para editar)</p>
                 </div>
             </form>
