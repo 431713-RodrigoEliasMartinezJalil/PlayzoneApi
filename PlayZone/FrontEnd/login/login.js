@@ -9,7 +9,7 @@ form.addEventListener('submit', async (e) => {
     const password = document.getElementById('inputPassword').value;
 
     try {
-        const response = await fetch('https://localhost:7239/api/Auth/login', {
+        const response = await fetch('http://localhost:5020/api/Auth/login', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ email, password })

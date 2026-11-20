@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PlayZone</title>
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+    >
+    <link rel="stylesheet" href="acerca.css">
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg bg-dark border-bottom border-body" data-bs-theme="dark">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="../inicio/inicio.html">PlayZone</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link" href="../inicio/inicio.html">Inicio</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="../productos/productos.html">Productos</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="../ventas/ventas.html">Ventas</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="../dashboard/dashboard.html">Dashboard</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" href="#">Acerca de</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <main>
+        <div class="container py-4">
+            <h1 class="h3 mb-4 aquaText">Acerca de PlayZone</h1>
+
+            <p class="text-light fs-5">
+                ¿Qué pasa cuando comprás un juego digital? Alguien tiene que saber qué
+                juegos existen, quién los hizo, cuánto cuestan y en qué biblioteca terminan.
+                PlayZone modela todo ese recorrido.
+            </p>
+
+            <p class="text-light">
+                Un catálogo de videojuegos con sus géneros y estudios. Usuarios que se registran,
+                compran con distintos medios de pago y arman su biblioteca. Una wishlist para los
+                títulos que están esperando, promociones con fecha de inicio y fin, y reseñas
+                donde cada jugador dice si recomienda o no lo que jugó.
+            </p>
+
+            <p class="text-light">
+                Detrás hay una base de datos relacional, una Web API en C# con autenticación JWT
+                y esta interfaz web que las conecta. Desde acá administrás productos y ventas,
+                y el dashboard te muestra cómo viene el negocio.
+            </p>
+
+            <h2 class="h4 mt-5 mb-3 aquaText">Integrantes</h2>
+            <table class="table table-dark table-striped w-auto">
+                <thead>
+                    <tr>
+                        <th>Legajo</th>
+                        <th>Apellido y nombre</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>430253</td><td>Fullana, Enzo</td></tr>
+                    <tr><td>421654</td><td>Gaiardo, Giorgio</td></tr>
+                    <tr><td>431713</td><td>Martinez Jalil, Rodrigo Elias</td></tr>
+                    <tr><td>430332</td><td>Peñaloza, Jose Angel</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+</body>
+</html>
