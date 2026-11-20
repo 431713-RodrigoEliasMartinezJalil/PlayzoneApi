@@ -12,251 +12,329 @@
 
     <link rel="stylesheet" href="dashboard.css">
 
+        <!-- Tipografía -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
+        rel="stylesheet"
+    >
+
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js" defer></script>
     <script src="dashboard.js" defer></script>
 </head>
 
 <body>
 
-    <!-- MENU DE NAVEGACION -->
-    <header>
-        <nav class="navbar navbar-expand-lg bg-dark border-bottom border-body"
-             data-bs-theme="dark">
+    <!-- =================================
+         BARRA DE NAVEGACIÓN
+    ================================== -->
 
-            <div class="container-fluid">
+    <header class="topbar">
 
-                <a class="navbar-brand" href="../inicio/inicio.html">
-                    PlayZone
+        <div class="container-fluid topbar-content">
+
+            <a href="../inicio/inicio.html" class="logo">
+                PLAY<span>ZONE</span>.
+            </a>
+
+            <button
+                type="button"
+                class="menu-toggle"
+                id="menuToggle"
+                aria-label="Abrir menú"
+                aria-expanded="false"
+                aria-controls="navLinks">
+                ☰
+            </button>
+
+            <nav class="nav-links" id="navLinks">
+
+                <a href="../inicio/inicio.html" class="nav-link">
+                    Inicio
                 </a>
 
-                <button class="navbar-toggler"
-                        type="button"
-                        data-bs-toggle="collapse"
-                        data-bs-target="#navbarNav"
-                        aria-controls="navbarNav"
-                        aria-expanded="false"
-                        aria-label="Abrir menú">
+                <a href="../productos/productos.html" class="nav-link">
+                    Productos
+                </a>
 
-                    <span class="navbar-toggler-icon"></span>
+                <a href="../ventas/ventas.html" class="nav-link">
+                    Órdenes de compra
+                </a>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../reembolsos/reembolsos.html">
+                        Reembolsos
+                    </a>
+                </li>
+
+                <a href="../dashboard/dashboard.html" class="nav-link active">
+                    Dashboard
+                </a>
+
+            </nav>
+
+            <div class="user-area">
+
+                <div class="user-avatar" id="userAvatar">
+                    U
+                </div>
+
+                <div class="user-information">
+                    <span class="user-label">Sesión iniciada</span>
+                    <span class="user-name" id="nombreUsuario">
+                        Usuario
+                    </span>
+                </div>
+
+                <button
+                    type="button"
+                    class="btn-logout"
+                    id="btnCerrarSesion">
+                    <span>↪</span>
+                    Salir
                 </button>
 
-                <div class="collapse navbar-collapse" id="navbarNav">
-
-                    <ul class="navbar-nav">
-
-                        <li class="nav-item">
-                            <a class="nav-link"
-                               href="../inicio/inicio.html">
-                                Inicio
-                            </a>
-                        </li>
-
-                        <li class="nav-item">
-                            <a class="nav-link"
-                               href="../productos/productos.html">
-                                Productos
-                            </a>
-                        </li>
-
-                        <li class="nav-item">
-                            <a class="nav-link"
-                               href="../ventas/ventas.html">
-                                Ventas
-                            </a>
-                        </li>
-
-                        <li class="nav-item">
-                            <a class="nav-link active"
-                               href="#">
-                                Dashboard
-                            </a>
-                        </li>
-
-                    </ul>
-                </div>
             </div>
-        </nav>
+
+        </div>
+
     </header>
 
+<main class="container py-4">
 
-    <!-- CONTENIDO PRINCIPAL -->
-    <main class="container py-4">
+    <div class="dashboard-header mb-4">
+        <h1 class="h3 aquaText">Panel de control</h1>
+        <p class="text-light">Resumen general de la actividad de PlayZone.</p>
+    </div>
 
-        <div class="dashboard-header mb-4">
+    <!-- RESUMEN GENERAL -->
+    <section class="mb-5">
+        <h2 class="section-title">Resumen general</h2>
 
-            <h1 class="h3 aquaText">
-                Panel de control
-            </h1>
-
-            <p class="text-light">
-                Resumen general de la actividad de PlayZone.
-            </p>
-
-        </div>
-
-
-        <!-- INDICADORES PRINCIPALES -->
-        <section class="row g-3 mb-4">
+        <div class="row g-3 mb-4">
 
             <div class="col-12 col-md-6 col-lg-3">
                 <article class="card dashboard-card h-100">
                     <div class="card-body">
-
-                        <h2 class="card-title">
-                            Total de órdenes
-                        </h2>
-
-                        <p class="dashboard-number" id="totalOrdenes">
-                            --
-                        </p>
-
+                        <h3 class="card-title">Total de órdenes</h3>
+                        <p class="dashboard-number" id="totalOrdenes">--</p>
                         <span>Órdenes registradas</span>
-
                     </div>
                 </article>
             </div>
 
-
             <div class="col-12 col-md-6 col-lg-3">
                 <article class="card dashboard-card h-100">
                     <div class="card-body">
-
-                        <h2 class="card-title">
-                            Pendientes
-                        </h2>
-
-                        <p class="dashboard-number text-warning"
-                           id="ordenesPendientes">
-                            --
-                        </p>
-
+                        <h3 class="card-title">Pendientes</h3>
+                        <p class="dashboard-number text-warning" id="ordenesPendientes">--</p>
                         <span>Órdenes por completar</span>
-
                     </div>
                 </article>
             </div>
 
-
             <div class="col-12 col-md-6 col-lg-3">
                 <article class="card dashboard-card h-100">
                     <div class="card-body">
-
-                        <h2 class="card-title">
-                            Completadas
-                        </h2>
-
-                        <p class="dashboard-number text-success"
-                           id="ordenesCompletadas">
-                            --
-                        </p>
-
+                        <h3 class="card-title">Completadas</h3>
+                        <p class="dashboard-number text-success" id="ordenesCompletadas">--</p>
                         <span>Órdenes finalizadas</span>
-
                     </div>
                 </article>
             </div>
-
 
             <div class="col-12 col-md-6 col-lg-3">
                 <article class="card dashboard-card h-100">
                     <div class="card-body">
-
-                        <h2 class="card-title">
-                            Productos
-                        </h2>
-
-                        <p class="dashboard-number"
-                           id="totalProductos">
-                            --
-                        </p>
-
-                        <span>Productos registrados</span>
-
+                        <h3 class="card-title">Productos publicados</h3>
+                        <p class="dashboard-number" id="totalProductos">--</p>
+                        <span>Disponibles en el catálogo</span>
                     </div>
                 </article>
             </div>
-
-        </section>
-
-
-        <!-- INDICADORES SECUNDARIOS -->
-        <section class="row g-3 mb-4">
-
-            <div class="col-12 col-md-6">
-                <article class="card dashboard-card h-100">
-                    <div class="card-body">
-
-                        <h2 class="card-title">
-                            Usuarios registrados
-                        </h2>
-
-                        <p class="dashboard-number"
-                           id="totalUsuarios">
-                            --
-                        </p>
-
-                    </div>
-                </article>
-            </div>
-
-
-            <div class="col-12 col-md-6">
-                <article class="card dashboard-card h-100">
-                    <div class="card-body">
-
-                        <h2 class="card-title">
-                            Solicitudes de reembolso
-                        </h2>
-
-                        <p class="dashboard-number"
-                           id="totalReembolsos">
-                            --
-                        </p>
-
-                    </div>
-                </article>
-            </div>
-
-        </section>
-
-
-        <!-- GRAFICOS -->
-        <section class="row g-3 mb-4">
-
-            <div class="col-12 col-lg-6">
-                <article class="card dashboard-card h-100">
-                    <div class="card-body">
-                        <h2 class="h5 mb-3">Distribución de órdenes</h2>
-                        <canvas id="graficoTorta"></canvas>
-                    </div>
-                </article>
-            </div>
-
-            <div class="col-12 col-lg-6">
-                <article class="card dashboard-card h-100">
-                    <div class="card-body">
-                        <h2 class="h5 mb-3">Resumen general</h2>
-                        <canvas id="graficoBarras"></canvas>
-                    </div>
-                </article>
-            </div>
-
-        </section>
-
-
-        <!-- ESTADO DE CARGA -->
-        <div id="mensajeDashboard"
-             class="text-center text-light mb-3"
-             role="status">
-
-            Cargando información...
 
         </div>
 
-    </main>
+        <div class="row g-3 mb-4">
 
+            <div class="col-12 col-md-6">
+                <article class="card dashboard-card h-100">
+                    <div class="card-body">
+                        <h3 class="card-title">Usuarios registrados</h3>
+                        <p class="dashboard-number" id="totalUsuarios">--</p>
+                    </div>
+                </article>
+            </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+            <div class="col-12 col-md-6">
+                <article class="card dashboard-card h-100">
+                    <div class="card-body">
+                        <h3 class="card-title">Solicitudes de reembolso</h3>
+                        <p class="dashboard-number" id="totalReembolsos">--</p>
+                        <span id="reembolsosPendientes">Pendientes: --</span>
+                    </div>
+                </article>
+            </div>
+
+        </div>
+
+        <div class="row g-3">
+
+            <div class="col-12 col-lg-6">
+                <article class="card dashboard-card h-100">
+                    <div class="card-body">
+                        <h3 class="h5 mb-3">Distribución de órdenes</h3>
+                        <div class="chart-container">
+                            <canvas id="graficoTorta"></canvas>
+                        </div>
+                    </div>
+                </article>
+            </div>
+
+            <div class="col-12 col-lg-6">
+                <article class="card dashboard-card h-100">
+                    <div class="card-body">
+                        <h3 class="h5 mb-3">Resumen general</h3>
+                        <div class="chart-container">
+                            <canvas id="graficoBarras"></canvas>
+                        </div>
+                    </div>
+                </article>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- INGRESOS MENSUALES -->
+    <section class="dashboard-section mb-5">
+        <div class="section-heading">
+            <div>
+                <h2 class="section-title">Ingresos mensuales</h2>
+                <p class="section-description">
+                    Evolución de las ventas y los ingresos netos por mes.
+                </p>
+            </div>
+
+            <div class="year-selector">
+                <label for="filtroAnio" class="form-label">Año</label>
+                <select id="filtroAnio" class="form-select">
+                </select>
+            </div>
+        </div>
+
+        <article class="card dashboard-card">
+            <div class="card-body">
+                <div class="chart-container chart-large">
+                    <canvas id="graficoIngresos"></canvas>
+                </div>
+                <p id="mensajeIngresos" class="report-message"></p>
+            </div>
+        </article>
+
+        <div class="table-responsive mt-3">
+            <table class="table table-dark table-hover align-middle report-table">
+                <thead>
+                    <tr>
+                        <th>Mes</th>
+                        <th>Moneda</th>
+                        <th>Órdenes</th>
+                        <th>Juegos vendidos</th>
+                        <th>Monto bruto</th>
+                        <th>Descuentos</th>
+                        <th>Ingreso neto</th>
+                    </tr>
+                </thead>
+                <tbody id="tablaIngresos">
+                    <tr>
+                        <td colspan="7" class="text-center">Cargando información...</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- VIDEOJUEGOS MAS VENDIDOS -->
+    <section class="dashboard-section mb-5">
+        <div class="section-heading">
+            <div>
+                <h2 class="section-title">Videojuegos más vendidos</h2>
+                <p class="section-description">
+                    Ranking de productos según su cantidad de ventas.
+                </p>
+            </div>
+
+            <div class="year-selector">
+                <label for="limiteVideojuegos" class="form-label">Mostrar</label>
+                <select id="limiteVideojuegos" class="form-select">
+                    <option value="5">Top 5</option>
+                    <option value="10" selected>Top 10</option>
+                    <option value="20">Top 20</option>
+                </select>
+            </div>
+        </div>
+
+        <article class="card dashboard-card">
+            <div class="card-body">
+                <div class="chart-container chart-large">
+                    <canvas id="graficoVideojuegos"></canvas>
+                </div>
+                <p id="mensajeVideojuegos" class="report-message"></p>
+            </div>
+        </article>
+    </section>
+
+    <!-- CLIENTES CON MAYOR GASTO -->
+    <section class="dashboard-section mb-5">
+        <div class="section-heading">
+            <div>
+                <h2 class="section-title">Clientes con mayor gasto</h2>
+                <p class="section-description">
+                    Clientes ordenados según el importe total de sus compras.
+                </p>
+            </div>
+
+            <div class="year-selector">
+                <label for="limiteClientes" class="form-label">Mostrar</label>
+                <select id="limiteClientes" class="form-select">
+                    <option value="5">Top 5</option>
+                    <option value="10" selected>Top 10</option>
+                    <option value="20">Top 20</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table table-dark table-hover align-middle report-table">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Cliente</th>
+                        <th>Usuario</th>
+                        <th>Moneda (ID)</th>
+                        <th>Compras</th>
+                        <th>Total gastado</th>
+                        <th>Ticket promedio</th>
+                    </tr>
+                </thead>
+                <tbody id="tablaClientes">
+                    <tr>
+                        <td colspan="7" class="text-center">Cargando información...</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <p id="mensajeClientes" class="report-message"></p>
+    </section>
+
+    <div id="mensajeDashboard" class="text-center text-light mb-3" role="status">
+        Cargando información...
+    </div>
+
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
 </html>

@@ -1,53 +1,414 @@
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PlayZone</title>
+
+    <title>PlayZone | Órdenes de compra</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="ventas.css">
+
+        <!-- Tipografía -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
-        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
         rel="stylesheet"
     >
-    <link rel="stylesheet" href="ventas.css">
+
     <script src="ventas.js" defer></script>
 </head>
-<body>
-    <header>
-        <nav class="navbar navbar-expand-lg bg-dark border-bottom border-body" data-bs-theme="dark">
-            <div class="container-fluid">
-                <a class="navbar-brand" href="../inicio/inicio.html">PlayZone</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav">
-                        <li class="nav-item">
-                            <a class="nav-link" href="../inicio/inicio.html">Inicio</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="../productos/productos.html">Productos</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link active" href="#">Ventas</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="../dashboard/dashboard.html">Dashboard</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
-    </header>
-    <main>
-        <div class="container py-4">
-            <h1 class="h3 mb-4 aquaText">Órdenes de compra</h1>
 
-            <form id="formulario" class="row g-3 mb-4">
+<body>
+
+    <!-- =================================
+         BARRA DE NAVEGACIÓN
+    ================================== -->
+
+    <header class="topbar">
+
+        <div class="container-fluid topbar-content">
+
+            <a href="../inicio/inicio.html" class="logo">
+                PLAY<span>ZONE</span>.
+            </a>
+
+            <button
+                type="button"
+                class="menu-toggle"
+                id="menuToggle"
+                aria-label="Abrir menú"
+                aria-expanded="false"
+                aria-controls="navLinks">
+                ☰
+            </button>
+
+            <nav class="nav-links" id="navLinks">
+
+                <a href="../inicio/inicio.html" class="nav-link">
+                    Inicio
+                </a>
+
+                <a href="../productos/productos.html" class="nav-link">
+                    Productos
+                </a>
+
+                <a href="../ventas/ventas.html" class="nav-link active">
+                    Órdenes de compra
+                </a>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../reembolsos/reembolsos.html">
+                        Reembolsos
+                    </a>
+                </li>
+
+                <a href="../dashboard/dashboard.html" class="nav-link">
+                    Dashboard
+                </a>
+
+            </nav>
+
+            <div class="user-area">
+
+                <div class="user-avatar" id="userAvatar">
+                    U
+                </div>
+
+                <div class="user-information">
+                    <span class="user-label">Sesión iniciada</span>
+                    <span class="user-name" id="nombreUsuario">
+                        Usuario
+                    </span>
+                </div>
+
+                <button
+                    type="button"
+                    class="btn-logout"
+                    id="btnCerrarSesion">
+                    <span>↪</span>
+                    Salir
+                </button>
+
+            </div>
+
+        </div>
+
+    </header>
+
+
+    <!-- CONTENIDO -->
+    <main class="container-fluid px-4 py-4">
+
+        <!-- ENCABEZADO -->
+        <section class="page-header mb-4">
+
+            <div>
+                <span class="section-label">ADMINISTRACIÓN</span>
+                <h1>Órdenes de compra</h1>
+                <p>Consultá las transacciones y los detalles de cada compra.</p>
+            </div>
+
+            <div id="padreBotones">
+            <button class="btn btn-outline-light" id="btnGenerarOrden">
+                Generar orden
+            </button>
+            <button class="btn btn-outline-light" id="btnActualizar">
+                ↻ Actualizar listado
+            </button>
+            </div>
+
+            
+
+        </section>
+
+
+        <!-- FILTROS -->
+        <section class="filter-card mb-4">
+
+            <div class="row g-3 align-items-end">
+
+                <div class="col-lg-5 col-md-6">
+
+                    <label for="buscarOrden" class="form-label">
+                        Buscar orden
+                    </label>
+
+                    <input type="text"
+                           class="form-control"
+                           id="buscarOrden"
+                           placeholder="ID, usuario o email...">
+
+                </div>
+
+
+                <div class="col-lg-3 col-md-6">
+
+                    <label for="filtroEstado" class="form-label">
+                        Estado
+                    </label>
+
+                    <select class="form-select" id="filtroEstado">
+                        <option value="">Todos los estados</option>
+                    </select>
+
+                </div>
+
+
+                <div class="col-lg-2 col-md-6">
+
+                    <label for="fechaDesde" class="form-label">
+                        Desde
+                    </label>
+
+                    <input type="date"
+                           class="form-control"
+                           id="fechaDesde">
+
+                </div>
+
+
+                <div class="col-lg-2 col-md-6">
+
+                    <label for="fechaHasta" class="form-label">
+                        Hasta
+                    </label>
+
+                    <input type="date"
+                           class="form-control"
+                           id="fechaHasta">
+
+                </div>
+
+
+                <div class="col-12 text-end">
+
+                    <button class="btn btn-outline-light"
+                            type="button"
+                            id="btnLimpiarFiltros">
+                        Limpiar filtros
+                    </button>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- TABLA -->
+        <section class="orders-card">
+
+            <div class="orders-card-header">
+
+                <div>
+                    <h2>Historial de compras</h2>
+                    <p>Órdenes registradas en PlayZone.</p>
+                </div>
+
+                <span class="orders-counter" id="contadorOrdenes">
+                    0 órdenes
+                </span>
+
+            </div>
+
+
+            <div class="table-responsive">
+
+                <table class="table orders-table align-middle mb-0">
+
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Usuario</th>
+                            <th>Fecha</th>
+                            <th>Método de pago</th>
+                            <th>Moneda</th>
+                            <th>Estado</th>
+                            <th>Productos</th>
+                            <th class="text-end">Detalle</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="tabla">
+
+                        <tr>
+                            <td colspan="8" class="text-center py-5">
+                                Cargando órdenes...
+                            </td>
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- MODAL DETALLE DE ORDEN -->
+    <div class="modal fade" id="modalOrden" tabindex="-1"
+         aria-labelledby="tituloModalOrden" aria-hidden="true">
+
+        <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+
+            <div class="modal-content modal-playzone">
+
+                <div class="modal-header">
+
+                    <div>
+                        <span class="section-label">INFORMACIÓN DE COMPRA</span>
+                        <h5 class="modal-title" id="tituloModalOrden">
+                            Detalle de la orden
+                        </h5>
+                    </div>
+
+                    <button type="button"
+                            class="btn-close btn-close-white"
+                            data-bs-dismiss="modal"
+                            aria-label="Cerrar">
+                    </button>
+
+                </div>
+
+
+                <div class="modal-body">
+
+                    <!-- INFORMACIÓN GENERAL -->
+                    <div class="order-info-grid mb-4">
+
+                        <div class="order-info-item">
+                            <span>Orden</span>
+                            <strong id="detalleIdOrden">-</strong>
+                        </div>
+
+                        <div class="order-info-item">
+                            <span>Usuario</span>
+                            <strong id="detalleUsuario">-</strong>
+                        </div>
+
+                        <div class="order-info-item">
+                            <span>Fecha</span>
+                            <strong id="detalleFecha">-</strong>
+                        </div>
+
+                        <div class="order-info-item">
+                            <span>Método de pago</span>
+                            <strong id="detallePago">-</strong>
+                        </div>
+
+                        <div class="order-info-item">
+                            <span>Moneda</span>
+                            <strong id="detalleMoneda">-</strong>
+                        </div>
+
+                        <div class="order-info-item">
+                            <span>Estado</span>
+                            <strong id="detalleEstado">-</strong>
+                        </div>
+
+                    </div>
+
+
+                    <!-- PRODUCTOS -->
+                    <h6 class="detail-section-title">
+                        Productos de la compra
+                    </h6>
+
+                    <div class="table-responsive">
+
+                        <table class="table detail-table align-middle">
+
+                            <thead>
+                                <tr>
+                                    <th>Producto</th>
+                                    <th>Precio</th>
+                                    <th>Descuento</th>
+                                    <th>Regalo</th>
+                                </tr>
+                            </thead>
+
+                            <tbody id="tablaDetalles">
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+
+                    <!-- TOTAL -->
+                    <div class="order-total">
+                        <span>Total de la orden</span>
+                        <strong id="detalleTotal">-</strong>
+                    </div>
+
+                </div>
+
+
+                <div class="modal-footer">
+
+                    <button type="button"
+                            class="btn btn-outline-light"
+                            data-bs-dismiss="modal">
+                        Cerrar
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- MODAL CREAR / EDITAR PRODUCTO -->
+    <div class="modal fade" id="modalCrearOrden" tabindex="-1"
+         aria-labelledby="tituloModalProducto" aria-hidden="true">
+
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+
+            <div class="modal-content modal-playzone">
+
+                <div class="modal-header">
+
+                    <div>
+                        <span class="section-label">CATÁLOGO</span>
+                        <h5 class="modal-title" id="tituloModalProducto">
+                            Nuevo producto
+                        </h5>
+                    </div>
+
+                    <button type="button"
+                            class="btn-close btn-close-white"
+                            data-bs-dismiss="modal"
+                            aria-label="Cerrar">
+                    </button>
+
+                </div>
+
+
+                <form id="formulario" class="row g-3 mb-4">
                 <input type="hidden" id="idOrden">
     
                 <div class="col-md-4">
-                    <label class="form-label aquaText">ID usuario</label>
-                    <input type="number" id="idUsuario" class="form-control" min="1" required>
+                    <label class="form-label aquaText">Usuario</label>
+                    <select id="idUsuario" class="form-select" required>
+                        <option value="1">GamerPro_99</option>
+                        <option value="2">PixelQueen</option>
+                        <option value="3">RetroHunter</option>
+                        <option value="4">ShadowKnight</option>
+                        <option value="5">NordicWarrior</option>
+                        <option value="6">IndieExplorer</option>
+                        <option value="7">LunaGamer</option>
+                        <option value="8">SpeedRunnerAR</option>
+                        <option value="9">OldSchoolGuy</option>
+                        <option value="10">CasualMia</option>
+                    </select>
                 </div>
                 <div class="col-md-4">
                     <label class="form-label aquaText">Método de pago</label>
@@ -70,38 +431,24 @@
                 <div class="col-12">
                     <label class="form-label aquaText">Productos</label>
                     <div id="detalles"></div>
-                    <button type="button" id="btnAgregar" class="btn btn-sm btn-outline-primary">+ Agregar producto</button>
+                    <button type="button" id="btnAgregar" class="btn btn-sm btn-outline-secondary">+ Agregar producto</button>
                 </div>
             
                 <div class="col-12">
-                    <button type="submit" class="btn btn-primary">Crear/Editar</button>
-                    <button type="button" id="btnCancelar" class="btn btn-secondary">Limpiar</button>
+                    <button type="submit" class="btn btn-outline-secondary">Crear/Editar</button>
+                    <button type="button" id="btnCancelar" class="btn btn-outline-secondary">Limpiar</button>
                     <p class="aquaText">(seleccione editar en una orden de abajo para editar)</p>
                 </div>
             </form>
-    
-            <div class="border rounded-3 overflow-hidden">
-                <table class="table table-striped mb-0">
-                    <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Usuario</th>
-                        <th>Fecha</th>
-                        <th>Pago</th>
-                        <th>Moneda</th>
-                        <th>Estado</th>
-                        <th>Productos</th>
-                        <th></th>
-                    </tr>
-                    </thead>
-                    <tbody id="tabla"></tbody>
-                </table>
-            </div>
-        </div>
-        <script src="ventas.js"></script>
-    </main>
-    <footer>
 
-    </footer>
+            </div>
+
+        </div>
+    </div>
+
+
+    <!-- BOOTSTRAP -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+
 </body>
 </html>

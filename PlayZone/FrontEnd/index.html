@@ -1,36 +1,314 @@
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PlayZone</title>
+
+    <title>PlayZone | Tu universo gamer</title>
+
+    <!-- Bootstrap -->
     <link
         href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
         rel="stylesheet"
     >
+
+    <!-- Tipografía -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
+        rel="stylesheet"
+    >
+
+    <!-- CSS propio -->
     <link rel="stylesheet" href="index.css">
 </head>
+
 <body>
-    <main>
-        <section class="hero">
-            <div class="hero-content">
-                <span class="hero-tag">TU UNIVERSO GAMER</span>
 
-                    <h1 class="hero-h1" id="titulo">
-                        PLAYZONE
-                    </h1>
+    <!-- NAVBAR -->
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark">
+            <div class="container">
 
-                    <p class="hero-p">
-                        Descubrí nuevos juegos, explorá nuestro catálogo
-                        y llevá tu experiencia gamer al siguiente nivel.
-                    </p>
+                <a class="navbar-brand logo" href="index.html">
+                    PLAY<span>ZONE</span>
+                    <span class="logo-dot">.</span>
+                </a>
 
-                    <div>
-                        <button type="button" class="btn btn-primary" onclick="window.location.href='/login/login.html'">Iniciar Sesión</button>
-                    </div>
+                <div class="ms-auto">
+                    <a href="login/login.html" class="btn btn-login">
+                        Iniciar sesión
+                    </a>
+                </div>
 
             </div>
+        </nav>
+    </header>
+
+
+    <main>
+
+        <!-- HERO -->
+        <section class="hero">
+
+            <div class="container hero-container">
+
+                <div class="hero-content">
+                <span class="hero-tag">TU UNIVERSO GAMER</span>
+
+                    <span class="hero-tag">
+                        <span class="status-dot"></span>
+                        TU UNIVERSO GAMER
+                    </span>
+
+                    <h1>
+                        TU PRÓXIMA
+                        <span>AVENTURA</span>
+                        COMIENZA AQUÍ.
+                    </h1>
+
+                    <p class="hero-description">
+                        Descubrí un universo de videojuegos,
+                        explorá nuevas experiencias y encontrá
+                        tu próximo juego favorito.
+                        Todo en un solo lugar.
+                    </p>
+
+                    <div class="hero-buttons">
+
+                        <a href="login/login.html" class="btn btn-primary-custom">
+                            Explorar PlayZone
+                            <span>→</span>
+                        </a>
+
+                        <a href="#experiencia" class="btn btn-secondary-custom">
+                            Conocé la plataforma
+                        </a>
+
+                    </div>
+
+                    <div class="hero-info">
+                        <span>✦</span>
+                        Una nueva forma de vivir tus videojuegos.
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="hero-overlay"></div>
+
         </section>
+
+
+        <!-- CARACTERÍSTICAS -->
+        <section class="features" id="experiencia">
+
+            <div class="container">
+
+                <div class="section-heading">
+
+                    <span class="section-tag">DESCUBRÍ PLAYZONE</span>
+
+                    <h2>
+                        Todo lo que necesitás
+                        <span>en un solo lugar.</span>
+                    </h2>
+
+                    <p>
+                        Una plataforma pensada para los amantes
+                        de los videojuegos.
+                    </p>
+
+                </div>
+
+
+                <div class="row g-4">
+
+                    <div class="col-md-4">
+
+                        <article class="feature-card">
+
+                            <div class="feature-icon">
+                                ◈
+                            </div>
+
+                            <h3>Explorá videojuegos</h3>
+
+                            <p>
+                                Descubrí nuestro catálogo y conocé
+                                diferentes experiencias de juego.
+                            </p>
+
+                        </article>
+
+                    </div>
+
+
+                    <div class="col-md-4">
+
+                        <article class="feature-card">
+
+                            <div class="feature-icon">
+                                ⌘
+                            </div>
+
+                            <h3>Gestioná tu biblioteca</h3>
+
+                            <p>
+                                Organizá tus videojuegos y mantené
+                                tus experiencias siempre a mano.
+                            </p>
+
+                        </article>
+
+                    </div>
+
+
+                    <div class="col-md-4">
+
+                        <article class="feature-card">
+
+                            <div class="feature-icon">
+                                ✧
+                            </div>
+
+                            <h3>Una experiencia completa</h3>
+
+                            <p>
+                                Accedé a una plataforma diseñada
+                                para acompañar tu pasión gamer.
+                            </p>
+
+                        </article>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
     </main>
+
+
+    <!-- FOOTER -->
+    <footer class="footer">
+
+        
+<div class="container footer-content">
+
+    <a class="footer-logo" href="index.html">
+        PLAY<span>ZONE</span>.
+    </a>
+
+    <p>
+        © 2026 PlayZone. Todos los derechos reservados.
+    </p>
+
+    <div class="footer-links">
+
+        <button
+            type="button"
+            class="btn-integrantes"
+            onclick="document.getElementById('modalIntegrantes').showModal()">
+            Integrantes del proyecto
+        </button>
+
+        <a href="https://github.com/431713-RodrigoEliasMartinezJalil/PlayzoneApi"
+           target="_blank"
+           rel="noopener noreferrer">
+            GitHub
+        </a>
+
+    </div>
+
+</div>
+
+
+<!-- MODAL INTEGRANTES -->
+<dialog id="modalIntegrantes" class="modal-integrantes">
+
+    <div class="modal-header-custom">
+
+        <div>
+            <span class="section-tag">PLAYZONE</span>
+            <h2>Integrantes del proyecto</h2>
+        </div>
+
+        <button
+            type="button"
+            class="modal-close"
+            onclick="document.getElementById('modalIntegrantes').close()">
+            &times;
+        </button>
+
+    </div>
+
+    <p class="modal-description">
+        Alumnos que participaron en el desarrollo de PlayZone.
+    </p>
+
+    <div class="table-responsive">
+
+        <table class="table table-dark table-hover integrantes-table">
+
+            <thead>
+                <tr>
+                    <th>Apellido y nombre</th>
+                    <th>Legajo</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                <tr>
+                    <td>Fullana Enzo</td>
+                    <td>430253</td>
+                </tr>
+
+                <tr>
+                    <td>Martinez Jalil Rodrigo Elias</td>
+                    <td>431713</td>
+                </tr>
+
+                <tr>
+                    <td>Gaiardo Giorgio</td>
+                    <td>421654</td>
+                </tr>
+
+                <tr>
+                    <td>Angel Peñaloza</td>
+                    <td>430332</td>
+                </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+    <div class="modal-footer-custom">
+
+        <span>© 2026 PlayZone</span>
+
+        <button
+            type="button"
+            class="btn-modal-close"
+            onclick="document.getElementById('modalIntegrantes').close()">
+            Cerrar
+        </button>
+
+    </div>
+
+</dialog>
+
+
+    </footer>
+
 </body>
 </html>
