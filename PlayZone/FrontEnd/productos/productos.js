@@ -26,8 +26,6 @@ const filtroTipo = document.getElementById("filtroTipo");
 const filtroEstado = document.getElementById("filtroEstado");
 const filtroClasificacion = document.getElementById("filtroClasificacion");
 
-let productos = [];
-
 
 // =========================================
 // UTILIDADES
